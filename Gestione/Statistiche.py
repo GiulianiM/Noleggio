@@ -4,29 +4,29 @@ from Attivita.Ricevuta import Ricevuta
 class Statistiche:
 
     def __init__(self):
-        self.tempoUtilizzoMedio = 0.0
-        self.ricavoMedio = 0.0
+        self.tempo_utilizzo_medio = 0.0
+        self.ricavo_medio = 0.0
         self.ricevute = {}
 
-    def generaStatistiche(self):
-        self.ricevute = Ricevuta().getRicevute()
+    def genera_statistiche(self):
+        self.ricevute = Ricevuta().get_ricevute()
         if self.ricevute is not None:
-            self.tempoUtilizzoMedio = self.calcolaTempoUtilizzoMedio()
-            self.ricavoMedio = self.calcolaRicavoMedio()
-            return round(self.tempoUtilizzoMedio, 2), round(self.ricavoMedio, 2)
+            self.tempo_utilizzo_medio = self.calcola_tempo_utilizzo_medio()
+            self.ricavo_medio = self.calcola__ricavo_medio()
+            return round(self.tempo_utilizzo_medio, 2), round(self.ricavo_medio, 2)
         else:
             return 0.0, 0.0
 
-    def calcolaTempoUtilizzoMedio(self):
+    def calcola_tempo_utilizzo_medio(self):
         if len(self.ricevute) > 0:
             for key, ricevuta in self.ricevute.items():
-                self.tempoUtilizzoMedio += ricevuta.tempoUtilizzo
-            self.tempoUtilizzoMedio /= len(self.ricevute)
-        return self.tempoUtilizzoMedio
+                self.tempo_utilizzo_medio += ricevuta.tempo_utilizzo
+            self.tempo_utilizzo_medio /= len(self.ricevute)
+        return self.tempo_utilizzo_medio
 
-    def calcolaRicavoMedio(self):
+    def calcola_ricavo_medio(self):
         if len(self.ricevute) > 0:
             for key, ricevuta in self.ricevute.items():
-                self.ricavoMedio += ricevuta.costoTotale
-            self.ricavoMedio /= len(self.ricevute)
-        return self.ricavoMedio
+                self.ricavo_medio += ricevuta.costo_totale
+            self.ricavo_medio /= len(self.ricevute)
+        return self.ricavo_medio
