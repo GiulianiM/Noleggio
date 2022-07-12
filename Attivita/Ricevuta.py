@@ -1,5 +1,7 @@
+import datetime
 import os
 import pickle
+import uuid
 
 from Servizio.Monopattino import Monopattino
 
@@ -7,61 +9,66 @@ from Servizio.Monopattino import Monopattino
 class Ricevuta:
 
     def __init__(self):
-        self.codiceCliente = ""
         self.codice = ""
-        self.tempoUtilizzo = 0.0
-        self.costoTotale = 0.0
+        self.codice_cliente = ""
+        self.codice_mezzo = ""
+        self.codice_corsa = ""
+        self.inizio = datetime.datetime(year=1970, month=1, day=1)
+        self.fine = datetime.datetime(year=1970, month=1, day=1)
+        self.tempo_utilizzo = 0.0
+        self.costo_totale = 0.0
 
     # crea una nuova ricevuta
-    def stilaRicevuta(self, codiceCliente):
-        self.codiceCliente = codiceCliente
-        self.codice =  # todo codice
-        # todo data di inizio e di fine corsa
-        self.tempoUtilizzo = self.getTempoUtilizzo()
-        self.costoTotale = self.getCostoTotale()
+    def stila_ricevuta(self, codice_mezzo, codice_corsa, codice_cliente, inizio, fine):
+        self.codice = uuid.uuid4()[:8]
+        self.codice_cliente = codice_cliente
+        self.codice_mezzo = codice_mezzo
+        self.codice_corsa = codice_corsa
+        self.inizio = inizio
+        self.fine = fine
 
-        ricevute = {}
-        if os.path.isfile("Dati/Ricevute.pickle"):
-            with open("Dati/Ricevute.pickle", "rb") as f:
-                ricevute = pickle.load(f)
+        self.tempo_utilizzo = self.get_tempo_utilizzo()
+        self.costo_totale = self.get_costo_totale()
 
-        ricevute[self.codice] = self
-
-        with open("Dati/Ricevute.pickle", "wb") as f:
-            pickle.dump(ricevute, f, pickle.HIGHEST_PROTOCOL)
-
-    # ritorna il costo totale della corsa
-    def getCostoTotale(self):
-        self.costoTotale = round(self.tempoUtilizzo * Monopattino().costoMinuto, 2)
-        return self.costoTotale
-
-    # ritorna il trempo totale di utilizzo del mezzo
-    def getTempoUtilizzo(self):
-        # round(int((self.dataFine - self.dataInizio).total_seconds()) / 60, 2)
-        self.tempoUtilizzo =  # todo tempo utilizzo
-        return self.tempoUtilizzo
-
-    # funzione che restituisce un dizionario di tutte le ricevute
-    def getRicevute(self):
         if os.path.isfile("Dati/Ricevute.pickle"):
             with open("Dati/Ricevute.pickle", "rb") as f:
                 ricevute = dict(pickle.load(f))
-                return ricevute
+            ricevute[self.codice] = self
+            with open("Dati/Ricevute.pickle", "wb") as f:
+                pickle.dump(ricevute, f, pickle.HIGHEST_PROTOCOL)
         else:
-            return None
+            print("File Ricevute.pickle non trovato")
 
-    # funzione che stampa a schermo la ricevuta
-    def getRicevutaToString(self):
-        return "Costo per minuto: " + str(Monopattino().costoMinuto) + "\n" + \
-               "Minuti utilizzati: " + str(self.tempoUtilizzo) + "\n" + \
-               "Costo totale: " + str(self.getCostoTotale()) + "\n" + \
-               "Data inizio: " + str(self.dataInizio) + "\n" + \
-               "Data fine: " + str(self.dataFine) + "\n"
+    # ritorna il costo totale della corsa
+    def get_costo_totale(self):
+        return round(self.tempo_utilizzo * Monopattino().costoMinuto, 2)
 
-    # funzione che restituisce la lista di tutte le ricevute di un cliente specifico
-    def getRicevuteCliente(self, codiceCliente):
-        ricevute = {}
+    # ritorna il trempo totale di utilizzo del mezzo
+    def get_tempo_utilizzo(self):
+        return round(int((self.fine - self.inizio).total_seconds()) / 60, 2)
+
+    # funzione che restituisce un dizionario di tutte le ricevute
+    def get_ricevute(self):
         if os.path.isfile("Dati/Ricevute.pickle"):
             with open("Dati/Ricevute.pickle", "rb") as f:
-                ricevute = pickle.load(f)
-        return [ricevuta for ricevuta in ricevute.values() if ricevuta.codiceCliente == codiceCliente]
+                ricevute = dict(pickle.load(f))
+                return ricevute or None
+        else:
+            print("File Ricevute.pickle non trovato")
+
+    # funzione che stampa a schermo la ricevuta
+    def get_ricevuta_to_string(self):
+        return "Costo per minuto: " + str(Monopattino().costoMinuto) + "\n" + \
+               "Minuti utilizzati: " + str(self.tempo_utilizzo) + "\n" + \
+               "Costo totale: " + str(self.costo_totale) + "\n" + \
+               "Data inizio: " + str(self.inizio) + "\n" + \
+               "Data fine: " + str(self.fine) + "\n"
+
+    # funzione che restituisce la lista di tutte le ricevute di un cliente specifico
+    def get_ricevute_cliente(self, codiceCliente):
+        if os.path.isfile("Dati/Ricevute.pickle"):
+            with open("Dati/Ricevute.pickle", "rb") as f:
+                ricevute = dict(pickle.load(f))
+            return [ricevuta for ricevuta in ricevute.values() if ricevuta.codiceCliente == codiceCliente]
+        else:
+            print("File Ricevute.pickle non trovato")

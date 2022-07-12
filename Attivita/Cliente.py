@@ -1,5 +1,6 @@
 import os
 import pickle
+import uuid
 
 from Attivita.Portafoglio import Portafoglio
 
@@ -8,55 +9,86 @@ class Cliente:
 
     def __init__(self):
         self.portafoglio = None
-        self.codice = -1
-        self.codiceFiscale = ""
+        self.codice = ""
+        self.codice_fiscale = ""
         self.nome = ""
         self.cognome = ""
         self.telefono = ""
 
-    # crea un cliente
-    def creaCliente(self, nome, cognome, telefono, codiceFiscale):
-        self.portafoglio = Portafoglio()
-        self.portafoglio.creaPortafoglio(self.codice)
-
-        clienti = {}
-        if os.path.isfile("Dati/Clienti.pickle"):
-            # rb significa lettura binaria
-            with open("Dati/Clienti.pickle", "rb") as f:
-                clienti = pickle.load(f)
-
-        # inseirisco l'istanza all'interno del dizionario
-        clienti[self.codice] = self
-
-        # wb significa scrittura binaria
-        with open("Dati/Clienti.pickle", "wb") as f:
-            pickle.dump(clienti, f, pickle.HIGHEST_PROTOCOL)
-
-    # elimina un cliente a partire dal codice
-    def rimuoviCliente(self):
-        if os.path.isfile('Dati/Clienti.pickle'):
-            with open('Dati/Clienti.pickle', 'rb') as f:
-                clienti = dict(pickle.load(f))
-                del clienti[self.codice]
-            with open('Dati/Clienti.pickle', 'wb') as f:
-                pickle.dump(clienti, f, pickle.HIGHEST_PROTOCOL)
-        self.portafoglio.rimuoviPortafoglio()
-        del self
-
     # ritorna un cliente a partire dal codice
-    def ricercaClienteCodice(self, codice):
+    def ricerca_cliente_codice(self, codice):
         if os.path.isfile('Dati/Clienti.pickle'):
             with open('Dati/Clienti.pickle', 'rb') as f:
                 clienti = dict(pickle.load(f))
                 return clienti.get(codice, None)
         else:
-            return None
+            print("File non trovato")
 
-    # ritorna un dizionario con tutti i clienti
-    def getClienti(self):
+    # ritorna un cliente a partire dal codice fiscale
+    def ricerca_cliente_codicefiscale(self, codicefiscale):
         if os.path.isfile('Dati/Clienti.pickle'):
             with open('Dati/Clienti.pickle', 'rb') as f:
                 clienti = dict(pickle.load(f))
-                return clienti
+                return clienti.get(codicefiscale, None)
         else:
-            return None
+            print("File non trovato")
+
+    # crea un cliente, lo inserisce nel dizionario e lo salva su file
+    def crea_cliente(self, nome, cognome, telefono, codice_fiscale):
+        # ricerco omonimi con codice fiscale per evitare duplicazioni
+        if self.ricerca_cliente_codicefiscale(codice_fiscale) is None:
+            self.nome = nome
+            self.cognome = cognome
+            self.telefono = telefono
+            self.codice_fiscale = codice_fiscale
+            self.codice = uuid.uuid4()[:8]
+            self.portafoglio = Portafoglio()
+            self.portafoglio.crea_portafoglio(self.codice)
+
+            if os.path.isfile("Dati/Clienti.pickle"):
+                with open("Dati/Clienti.pickle", "rb") as f:
+                    clienti = dict(pickle.load(f))
+                clienti[self.codice] = self
+                with open("Dati/Clienti.pickle", "wb") as f:
+                    pickle.dump(clienti, f, pickle.HIGHEST_PROTOCOL)
+                print("Registrazione avvenuta con successo")
+            else:
+                print("File non trovato")
+        else:
+            print("Cliente già presente")
+
+    def modifica_cliente(self, codice, nome, cognome, telefono, codice_fiscale):
+        if os.path.isfile('Dati/Clienti.pickle'):
+            with open('Dati/Clienti.pickle', 'rb') as f:
+                clienti = dict(pickle.load(f))
+                clienti[codice].nome = nome
+                clienti[codice].cognome = cognome
+                clienti[codice].telefono = telefono
+                clienti[codice].codice_fiscale = codice_fiscale
+            with open('Dati/Clienti.pickle', 'wb') as f:
+                pickle.dump(clienti, f, pickle.HIGHEST_PROTOCOL)
+            print("Modifica avvenuta con successo")
+        else:
+            print("File non trovato")
+
+    # elimina un cliente a partire dal codice
+    def rimuovi_cliente_codice(self, codice):
+        if os.path.isfile('Dati/Clienti.pickle'):
+            with open('Dati/Clienti.pickle', 'rb') as f:
+                clienti = dict(pickle.load(f))
+                del clienti[codice]
+            with open('Dati/Clienti.pickle', 'wb') as f:
+                pickle.dump(clienti, f, pickle.HIGHEST_PROTOCOL)
+            self.portafoglio.rimuoviPortafoglio()
+            del self
+        else:
+            print("File non trovato")
+
+    # ritorna un dizionario con tutti i clienti
+    def get_clienti(self):
+        if os.path.isfile('Dati/Clienti.pickle'):
+            with open('Dati/Clienti.pickle', 'rb') as f:
+                clienti = dict(pickle.load(f))
+                return clienti or None
+        else:
+            print("File non trovato")
