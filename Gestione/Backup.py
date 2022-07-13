@@ -1,4 +1,5 @@
 import pickle
+import time
 
 from Attivita.Cliente import Cliente
 from Attivita.Corsa import Corsa
@@ -33,3 +34,9 @@ class Backup:
                 pickle.dump(ricevuta, f)
             for portafoglio in self.portafogli:
                 pickle.dump(portafoglio, f)
+
+    def backup_daily(self):
+        schedule.every().day.at("00:00").do(self.esegui_backup)
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
