@@ -12,14 +12,13 @@ class Portafoglio:
         # come codice univoco del portafoglio associo il codice univoco del cliente
         self.codice = codice_cliente
 
+        portafogli = {}
         if os.path.isfile("Dati/Portafogli.pickle"):
             with open("Dati/Portafogli.pickle", "rb") as f:
                 portafogli = dict(pickle.load(f))
-            portafogli[self.codice] = self
-            with open("Dati/Portafogli.pickle", "wb") as f:
-                pickle.dump(portafogli, f, pickle.HIGHEST_PROTOCOL)
-        else:
-            print("File non trovato")
+        portafogli[self.codice] = self
+        with open("Dati/Portafogli.pickle", "wb") as f:
+            pickle.dump(portafogli, f, pickle.HIGHEST_PROTOCOL)
 
     # ritorna il saldo del portafoglio del cliente
     def getSaldo(self):

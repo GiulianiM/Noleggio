@@ -10,7 +10,7 @@ class Cliente:
     def __init__(self):
         self.portafoglio = None
         self.codice = ""
-        self.codice_fiscale = ""
+        self.codicefiscale = ""
         self.nome = ""
         self.cognome = ""
         self.telefono = ""
@@ -21,45 +21,49 @@ class Cliente:
         if os.path.isfile('Dati/Clienti.pickle'):
             with open('Dati/Clienti.pickle', 'rb') as f:
                 clienti = dict(pickle.load(f))
-                return clienti.get(codice, None)
-        else:
-            print("File non trovato")
+                for cliente in clienti.values():
+                    if cliente.codice == codice:
+                        return cliente
+                return None
 
     # ritorna un cliente a partire dal codice fiscale
     def ricerca_cliente_codicefiscale(self, codicefiscale):
         if os.path.isfile('Dati/Clienti.pickle'):
             with open('Dati/Clienti.pickle', 'rb') as f:
                 clienti = dict(pickle.load(f))
-                return clienti.get(codicefiscale, None)
-        else:
-            print("File non trovato")
+                for cliente in clienti.values():
+                    if cliente.codicefiscale == codicefiscale:
+                        return cliente
+                return None
 
     # crea un cliente, lo inserisce nel dizionario e lo salva su file
-    def crea_cliente(self, nome, cognome, telefono, codice_fiscale, password):
+    def crea_cliente(self, nome, cognome, telefono, codicefiscale, password):
         # ricerco omonimi con codice fiscale per evitare duplicazioni
-        if self.ricerca_cliente_codicefiscale(codice_fiscale) is None:
+        if self.ricerca_cliente_codicefiscale(codicefiscale) is None:
             self.nome = nome
             self.cognome = cognome
             self.telefono = telefono
-            self.codice_fiscale = codice_fiscale
-            self.password = password
-            self.codice = uuid.uuid4()
+            self.codicefiscale = codicefiscale
+            self.codice = str(uuid.uuid4())[:8]
             self.portafoglio = Portafoglio()
             self.portafoglio.crea_portafoglio(self.codice)
+            self.password = password
 
+            clienti = {}
             if os.path.isfile("Dati/Clienti.pickle"):
                 with open("Dati/Clienti.pickle", "rb") as f:
                     clienti = dict(pickle.load(f))
-                clienti[self.codice] = self
-                with open("Dati/Clienti.pickle", "wb") as f:
-                    pickle.dump(clienti, f, pickle.HIGHEST_PROTOCOL)
-                print("Registrazione avvenuta con successo")
-            else:
-                print("File non trovato")
+            clienti[self.codice] = self
+            with open("Dati/Clienti.pickle", "wb") as f:
+                pickle.dump(clienti, f, pickle.HIGHEST_PROTOCOL)
+            return "Registrazione avvenuta con successo"
         else:
-            print("Cliente già presente")
+            return "Utente già presente con lo stesso codice fiscale"
 
-    def modifica_cliente(self, codice, nome, cognome, telefono, codice_fiscale, password):
+
+
+
+    def modifica_cliente(self, codice, nome, cognome, telefono, codice_fiscale):
         if os.path.isfile('Dati/Clienti.pickle'):
             with open('Dati/Clienti.pickle', 'rb') as f:
                 clienti = dict(pickle.load(f))
@@ -67,7 +71,6 @@ class Cliente:
                 clienti[codice].cognome = cognome
                 clienti[codice].telefono = telefono
                 clienti[codice].codice_fiscale = codice_fiscale
-                clienti[codice].password = password
             with open('Dati/Clienti.pickle', 'wb') as f:
                 pickle.dump(clienti, f, pickle.HIGHEST_PROTOCOL)
             print("Modifica avvenuta con successo")
