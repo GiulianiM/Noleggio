@@ -59,10 +59,6 @@ class Cliente:
             return "Registrazione avvenuta con successo"
         else:
             return "Utente già presente con lo stesso codice fiscale"
-
-
-
-
     def modifica_cliente(self, codice, nome, cognome, telefono, codice_fiscale):
         if os.path.isfile('Dati/Clienti.pickle'):
             with open('Dati/Clienti.pickle', 'rb') as f:

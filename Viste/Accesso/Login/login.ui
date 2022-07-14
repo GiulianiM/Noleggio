@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Login</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(54, 54, 54);</string>
@@ -83,7 +83,7 @@ font: 20pt &quot;Segoe UI&quot;;</string>
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>../../../../../Downloads/9160316006684b2394ddc51a4ab8fa74.png</pixmap>
+    <pixmap>../../logo.png</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>

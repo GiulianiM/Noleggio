@@ -20,9 +20,9 @@ class Signup(QDialog):
             cf = self.cf.text()
             telefono = self.telefono.text()
             password = self.password.text()
-            message = cliente.crea_cliente(nome=nome, cognome=cognome, telefono=telefono, codicefiscale=cf, password=password)
+            message = cliente.crea_cliente(nome=nome, cognome=cognome, telefono=telefono, codicefiscale=cf,
+                                           password=password)
             QMessageBox.information(self, "Attenzione!", message)
-
 
     def check_campi(self):
         # il nome deve avere minimo 3 caratteri
