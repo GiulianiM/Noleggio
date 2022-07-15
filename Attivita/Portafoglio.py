@@ -21,7 +21,7 @@ class Portafoglio:
             pickle.dump(portafogli, f, pickle.HIGHEST_PROTOCOL)
 
     # ritorna il saldo del portafoglio del cliente
-    def getSaldo(self):
+    def get_saldo(self):
         if os.path.isfile("Dati/Portafogli.pickle"):
             with open("Dati/Portafogli.pickle", "rb") as f:
                 portafogli = dict(pickle.load(f))
@@ -31,11 +31,12 @@ class Portafoglio:
                     self.saldo = v.saldo
                     return round(v.saldo, 2)
         else:
-            print("File non trovato")
+            return None
 
     # versa il denaro nel portafoglio del cliente
-    def versaDenaro(self, importo):
-        self.saldo += importo
+    def versa_denaro(self, importo):
+        print(self.saldo)
+        self.saldo = self.saldo + importo
 
         if os.path.isfile("Dati/Portafogli.pickle"):
             with open("Dati/Portafogli.pickle", "rb") as f:
@@ -47,11 +48,10 @@ class Portafoglio:
 
             with open("Dati/Portafogli.pickle", "wb") as f:
                 pickle.dump(portafogli, f, pickle.HIGHEST_PROTOCOL)
-        else:
-            print("File non trovato")
+            return self.saldo, "Importo versato correttamente"
 
     # preleva il denaro dal portafoglio del cliente
-    def prelevaDenaro(self, importo):
+    def preleva_denaro(self, importo):
         self.saldo -= importo
 
         if os.path.isfile("Dati/Portafogli.pickle"):
@@ -68,7 +68,7 @@ class Portafoglio:
             print("File non trovato")
 
     # elimina il portafoglio del cliente
-    def rimuoviPortafoglio(self):
+    def rimuovi_portafoglio(self):
         if os.path.isfile('Dati/Portafogli.pickle'):
             with open('Dati/Portafogli.pickle', 'rb') as f:
                 portafogli = dict(pickle.load(f))
@@ -82,7 +82,7 @@ class Portafoglio:
             print("File non trovato")
 
     # ritorna un dizionario con tutti i portafogli di tutti i clienti
-    def getPortafogli(self):
+    def get_portafogli(self):
         if os.path.isfile("Dati/Portafogli.pickle"):
             with open("Dati/Portafogli.pickle", "rb") as f:
                 portafogli = dict(pickle.load(f))

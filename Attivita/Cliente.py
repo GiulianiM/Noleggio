@@ -56,22 +56,22 @@ class Cliente:
             clienti[self.codice] = self
             with open("Dati/Clienti.pickle", "wb") as f:
                 pickle.dump(clienti, f, pickle.HIGHEST_PROTOCOL)
-            return "Registrazione avvenuta con successo"
+            return self, "Registrazione avvenuta con successo"
         else:
-            return "Utente già presente con lo stesso codice fiscale"
-    def modifica_cliente(self, codice, nome, cognome, telefono, codice_fiscale):
+            return None, "Utente già presente con lo stesso codice fiscale"
+
+    #def modifica_cliente(self, codice, nome, cognome, telefono, codice_fiscale):
+    def modifica_cliente(self, nuova_pwd, codice_cliente):
         if os.path.isfile('Dati/Clienti.pickle'):
             with open('Dati/Clienti.pickle', 'rb') as f:
                 clienti = dict(pickle.load(f))
-                clienti[codice].nome = nome
-                clienti[codice].cognome = cognome
-                clienti[codice].telefono = telefono
-                clienti[codice].codice_fiscale = codice_fiscale
+                #clienti[codice_cliente].nome = nome
+                clienti[codice_cliente].password = nuova_pwd
             with open('Dati/Clienti.pickle', 'wb') as f:
                 pickle.dump(clienti, f, pickle.HIGHEST_PROTOCOL)
-            print("Modifica avvenuta con successo")
+            return "Modifica avvenuta con successo"
         else:
-            print("File non trovato")
+            return "Modifica non avvenuta"
 
     # elimina un cliente a partire dal codice
     def rimuovi_cliente_codice(self, codice):
