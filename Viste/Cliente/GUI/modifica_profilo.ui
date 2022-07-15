@@ -150,6 +150,23 @@
     <string>Conferma</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="back_button">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>260</y>
+     <width>90</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size:20; color:white;background-color:rgb(38, 157, 206)
+</string>
+   </property>
+   <property name="text">
+    <string>Torna Indietro</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

@@ -2,7 +2,7 @@ import sys
 
 from PyQt5.QtWidgets import QApplication
 
-from Viste.Accesso.Login.Login import Login
+from Viste.Accesso.Autenticazione import Login
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

@@ -19,8 +19,8 @@
   <widget class="QListWidget" name="listWidget">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>40</y>
+     <x>20</x>
+     <y>60</y>
      <width>211</width>
      <height>192</height>
     </rect>
@@ -33,9 +33,9 @@ color: rgb(255, 255, 255);</string>
   <widget class="QPushButton" name="back_button">
    <property name="geometry">
     <rect>
-     <x>310</x>
+     <x>300</x>
      <y>260</y>
-     <width>75</width>
+     <width>90</width>
      <height>24</height>
     </rect>
    </property>
@@ -45,6 +45,27 @@ color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
     <string>Torna Indietro</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="ricevute_label">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>20</y>
+     <width>71</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>13</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size:14; color:white</string>
+   </property>
+   <property name="text">
+    <string>Ricevute:</string>
    </property>
   </widget>
  </widget>

@@ -4,7 +4,7 @@ import pickle
 
 class Portafoglio:
     def __init__(self):
-        self.saldo = 0.0
+        self.saldo = 0.00
         self.codice = ""
 
     # crea un nuovo portafoglio
@@ -29,26 +29,26 @@ class Portafoglio:
             for k, v in portafogli.items():
                 if k == self.codice:
                     self.saldo = v.saldo
-                    return round(v.saldo, 2)
+                    return format(v.saldo, '0.2f')
         else:
             return None
 
     # versa il denaro nel portafoglio del cliente
     def versa_denaro(self, importo):
-        print(self.saldo)
-        self.saldo = self.saldo + importo
+        print(format(self.saldo, '0.2f'))
+        self.saldo += importo
 
         if os.path.isfile("Dati/Portafogli.pickle"):
             with open("Dati/Portafogli.pickle", "rb") as f:
                 portafogli = dict(pickle.load(f))
 
             for k, v in portafogli.items():
-                if k is self.codice:
+                if k == self.codice:
                     v.saldo += importo
 
             with open("Dati/Portafogli.pickle", "wb") as f:
                 pickle.dump(portafogli, f, pickle.HIGHEST_PROTOCOL)
-            return self.saldo, "Importo versato correttamente"
+            return format(self.saldo, '0.2f') , "Importo versato correttamente"
 
     # preleva il denaro dal portafoglio del cliente
     def preleva_denaro(self, importo):
@@ -75,7 +75,7 @@ class Portafoglio:
                 del portafogli[self.codice]
             with open('Dati/Portafogli.pickle', 'wb') as f:
                 pickle.dump(portafogli, f, pickle.HIGHEST_PROTOCOL)
-            self.saldo = 0.0
+            self.saldo = 0.00
             self.codice = -1
             del self
         else:

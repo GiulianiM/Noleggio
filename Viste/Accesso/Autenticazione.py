@@ -47,25 +47,30 @@ class Signup(QDialog):
     def createaccfunction(self):
         # if self.check_campi():
         cliente = Cliente()
-        nome = self.nome.text()
-        cognome = self.cognome.text()
-        cf = self.cf.text()
+        nome = self.nome.text().capitalize()
+        cognome = self.cognome.text().capitalize()
+        cf = self.cf.text().upper()
         telefono = self.telefono.text()
         password = self.password.text()
-        cliente, message = cliente.crea_cliente(nome=nome, cognome=cognome, telefono=telefono, codicefiscale=cf,
-                                                password=password)
-        QMessageBox.information(self, "Attenzione!", message + "codice: " + str(cliente.codice) + " password: " + str(cliente.password))
-        self.homepage_cliente = HomepageCliente(cliente)
-        self.homepage_cliente.show()
-        self.close()
+        if Signup.check_campi(self):
+            cliente, message = cliente.crea_cliente(nome=nome, cognome=cognome, telefono=telefono, codicefiscale=cf,
+                                                    password=password)
+            if cliente is not None:
+                QMessageBox.information(self, "Attenzione!", message + "codice: " + str(cliente.codice) + " password: " + str(cliente.password))
+                self.homepage_cliente = HomepageCliente(cliente)
+                self.homepage_cliente.show()
+                self.close()
+            else:
+                QMessageBox.warning(self, "Attenzione!", message)
 
     def check_campi(self):
+        regex = r"[a-zA-Z0-9]"
         # il nome deve avere minimo 3 caratteri
         if len(self.nome.text()) > 2:
             # il cognome deve avere minimo 3 caratteri
             if len(self.cognome.text()) > 2:
                 # il codice fiscale deve essere esattamente di 16 caratteri
-                if len(self.cf.text()) == 16:
+                if len(self.cf.text()) == 16 and self.cf.text().isalnum():
                     # il numero di telefono puo avere solo 10 cifre
                     if len(self.telefono.text()) == 10 and str(self.telefono.text()).isnumeric():
                         return True

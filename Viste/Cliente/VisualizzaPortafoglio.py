@@ -13,7 +13,6 @@ class VisualizzaPortafoglio(QDialog):
         self.confirm_button.clicked.connect(self.go_conferma_versamento)
         self.saldo_label_to_edit.setText(str(self.cliente.portafoglio.get_saldo()) + "€")
 
-
     def go_conferma_versamento(self):
         value = self.quantita_da_versare.value()
         saldo, message = self.cliente.portafoglio.versa_denaro(value)

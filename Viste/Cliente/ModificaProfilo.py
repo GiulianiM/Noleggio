@@ -13,6 +13,7 @@ class ModificaProfilo(QDialog):
         self.new_pw_input.setEchoMode(QtWidgets.QLineEdit.Password)
         self.new_pw_input_check.setEchoMode(QtWidgets.QLineEdit.Password)
         self.confirm_button.clicked.connect(self.go_conferma_modifiche)
+        self.back_button.clicked.connect(self.go_indietro)
 
     # eseguo i segenti controlli:
     # 1) le password non devono essere vuote
@@ -35,3 +36,6 @@ class ModificaProfilo(QDialog):
                                                     codice_cliente=self.cliente.codice)
             QMessageBox.information(self, "Attenzione!", message)
             self.close()
+
+    def go_indietro(self):
+        self.close()
