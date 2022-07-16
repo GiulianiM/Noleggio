@@ -5,6 +5,7 @@ from Attivita.Corsa import Corsa
 from Attivita.Portafoglio import Portafoglio
 from Attivita.Ricevuta import Ricevuta
 from Servizio.Mezzo import Mezzo
+import schedule
 
 
 class Backup:
@@ -16,12 +17,12 @@ class Backup:
         self.clienti = {}
         self.mezzi = {}
 
-    def eseguiBackup(self):
-        self.clienti = Cliente().getClienti()
-        self.corse = Corsa().getCorse()
-        self.ricevute = Ricevuta().getRicevute()
-        self.portafogli = Portafoglio().getPortafogli()
-        self.mezzi = Mezzo().getMezzi()
+    def esegui_backup(self):
+        self.clienti = Cliente().get_clienti()
+        self.corse = Corsa().get_corse()
+        self.ricevute = Ricevuta().get_ricevute()
+        self.portafogli = Portafoglio().get_portafogli()
+        self.mezzi = Mezzo().get_mezzi()
 
         with open("Dati/Backup.pickle", "wb") as f:
             for cliente in self.clienti:
