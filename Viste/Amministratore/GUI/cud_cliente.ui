@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Ricevute</string>
+   <string>CUD Cliente</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(52, 52, 52);</string>
@@ -20,7 +20,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>30</y>
+     <y>50</y>
      <width>351</width>
      <height>500</height>
     </rect>
@@ -34,7 +34,7 @@ color: rgb(255, 255, 255);</string>
    <property name="geometry">
     <rect>
      <x>480</x>
-     <y>550</y>
+     <y>560</y>
      <width>91</width>
      <height>24</height>
     </rect>
@@ -51,7 +51,7 @@ color: rgb(255, 255, 255);</string>
    <property name="geometry">
     <rect>
      <x>390</x>
-     <y>30</y>
+     <y>50</y>
      <width>191</width>
      <height>61</height>
     </rect>
@@ -59,7 +59,6 @@ color: rgb(255, 255, 255);</string>
    <property name="font">
     <font>
      <pointsize>13</pointsize>
-     <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
@@ -78,7 +77,7 @@ color: rgb(255, 255, 255);</string>
    <property name="geometry">
     <rect>
      <x>390</x>
-     <y>130</y>
+     <y>150</y>
      <width>61</width>
      <height>51</height>
     </rect>
@@ -86,7 +85,6 @@ color: rgb(255, 255, 255);</string>
    <property name="font">
     <font>
      <pointsize>13</pointsize>
-     <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
@@ -95,11 +93,11 @@ color: rgb(255, 255, 255);</string>
 </string>
    </property>
    <property name="text">
-    <string/>
+    <string>🖊️</string>
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>C:/Users/lory1/Downloads/matita (72px).ico</normaloff>C:/Users/lory1/Downloads/matita (72px).ico</iconset>
+     <normaloff>../../../../../../lory1/Downloads/matita (72px).ico</normaloff>../../../../../../lory1/Downloads/matita (72px).ico</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -115,7 +113,7 @@ color: rgb(255, 255, 255);</string>
    <property name="geometry">
     <rect>
      <x>520</x>
-     <y>130</y>
+     <y>150</y>
      <width>61</width>
      <height>51</height>
     </rect>
@@ -123,7 +121,6 @@ color: rgb(255, 255, 255);</string>
    <property name="font">
     <font>
      <pointsize>13</pointsize>
-     <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
@@ -132,17 +129,55 @@ color: rgb(255, 255, 255);</string>
 </string>
    </property>
    <property name="text">
-    <string/>
+    <string>🗑️</string>
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>C:/Users/lory1/Downloads/cestino (72px).ico</normaloff>C:/Users/lory1/Downloads/cestino (72px).ico</iconset>
+     <normaloff>../../../../../../lory1/Downloads/cestino (72px).ico</normaloff>../../../../../../lory1/Downloads/cestino (72px).ico</iconset>
    </property>
    <property name="iconSize">
     <size>
      <width>30</width>
      <height>30</height>
     </size>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>20</y>
+     <width>61</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>13</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string>Clienti:</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="refresh_button">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>560</y>
+     <width>71</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size:20; color:white;background-color:rgb(38, 157, 206)
+</string>
+   </property>
+   <property name="text">
+    <string>Aggiorna</string>
    </property>
   </widget>
  </widget>

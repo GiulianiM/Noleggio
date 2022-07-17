@@ -85,7 +85,7 @@ font: 20pt &quot;Segoe UI&quot;;</string>
     <enum>QLineEdit::Password</enum>
    </property>
   </widget>
-  <widget class="QPushButton" name="signupbutton">
+  <widget class="QPushButton" name="bottone_crea_cliente">
    <property name="geometry">
     <rect>
      <x>480</x>
@@ -239,7 +239,7 @@ font: 20pt &quot;Segoe UI&quot;;</string>
   <zorder>label_3</zorder>
   <zorder>nome</zorder>
   <zorder>password</zorder>
-  <zorder>signupbutton</zorder>
+  <zorder>bottone_crea_cliente</zorder>
   <zorder>label_6</zorder>
   <zorder>cognome</zorder>
   <zorder>cf</zorder>

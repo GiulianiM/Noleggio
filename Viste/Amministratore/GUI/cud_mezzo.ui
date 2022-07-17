@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Ricevute</string>
+   <string>CUD Mezzo</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(52, 52, 52);</string>
@@ -59,7 +59,6 @@ color: rgb(255, 255, 255);</string>
    <property name="font">
     <font>
      <pointsize>13</pointsize>
-     <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
@@ -86,7 +85,6 @@ color: rgb(255, 255, 255);</string>
    <property name="font">
     <font>
      <pointsize>13</pointsize>
-     <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
@@ -95,11 +93,11 @@ color: rgb(255, 255, 255);</string>
 </string>
    </property>
    <property name="text">
-    <string/>
+    <string>🖊️</string>
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>C:/Users/lory1/Downloads/matita (72px).ico</normaloff>C:/Users/lory1/Downloads/matita (72px).ico</iconset>
+     <normaloff>../../../../../../lory1/Downloads/matita (72px).ico</normaloff>../../../../../../lory1/Downloads/matita (72px).ico</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -123,7 +121,6 @@ color: rgb(255, 255, 255);</string>
    <property name="font">
     <font>
      <pointsize>13</pointsize>
-     <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
@@ -132,11 +129,11 @@ color: rgb(255, 255, 255);</string>
 </string>
    </property>
    <property name="text">
-    <string/>
+    <string>🗑️</string>
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>C:/Users/lory1/Downloads/cestino (72px).ico</normaloff>C:/Users/lory1/Downloads/cestino (72px).ico</iconset>
+     <normaloff>../../../../../../lory1/Downloads/cestino (72px).ico</normaloff>../../../../../../lory1/Downloads/cestino (72px).ico</iconset>
    </property>
    <property name="iconSize">
     <size>

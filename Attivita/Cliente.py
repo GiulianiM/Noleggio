@@ -81,7 +81,8 @@ class Cliente:
                 del clienti[codice]
             with open('Dati/Clienti.pickle', 'wb') as f:
                 pickle.dump(clienti, f, pickle.HIGHEST_PROTOCOL)
-            self.portafoglio.rimuoviPortafoglio()
+            if self.portafoglio is not None:
+                self.portafoglio.rimuoviPortafoglio()
             del self
         else:
             print("File non trovato")
@@ -94,3 +95,12 @@ class Cliente:
                 return clienti or None
         else:
             print("File non trovato")
+
+    def get_cliente_to_string(self):
+        return "Codice: " + self.codice + "\n" + \
+               "Nome: " + self.nome + "\n" + \
+               "Cognome: " + self.cognome + "\n" + \
+               "Telefono: " + self.telefono + "\n" + \
+               "Codice fiscale: " + self.codicefiscale + "\n" + \
+               "Password: " + self.password + "\n" + \
+               "Saldo: " + str(self.portafoglio.get_saldo()) + "\n"

@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QDialog, QMessageBox
 from PyQt5.uic import loadUi
 
 from Attivita.Cliente import Cliente
+from Viste.Amministratore.ControlPanel import ControlPanel
 from Viste.Cliente.HomepageCliente import HomepageCliente
 
 
@@ -17,18 +18,24 @@ class Login(QDialog):
         self.createaccbutton.clicked.connect(self.gotocreate)
 
     def loginfunction(self):
-        id = self.id.text()
+        id = self.id.text().strip()
         password = self.password.text()
-        cliente = Cliente().ricerca_cliente_codice(id)
-        if cliente is None:
-            QMessageBox.warning(self, "Attenzione!", "Cliente con questo codice non trovato")
-        elif cliente.password != password:
-            QMessageBox.warning(self, "Attenzione!", "Password errata")
-        else:
-            self.homepage = HomepageCliente(cliente)
-            self.homepage.show()
+        if id == "admin" and password == "password":
+            self.admin = ControlPanel()
+            self.admin.show()
             self.widget.setCurrentIndex(self.widget.currentIndex() + 1)
             self.close()
+        else:
+            cliente = Cliente().ricerca_cliente_codice(id)
+            if cliente is None:
+                QMessageBox.warning(self, "Attenzione!", "Cliente con questo codice non trovato")
+            elif cliente.password != password:
+                QMessageBox.warning(self, "Attenzione!", "Password errata")
+            else:
+                self.homepage = HomepageCliente(cliente)
+                self.homepage.show()
+                self.widget.setCurrentIndex(self.widget.currentIndex() + 1)
+                self.close()
 
     def gotocreate(self):
         self.signup = Signup()
@@ -64,7 +71,6 @@ class Signup(QDialog):
                 QMessageBox.warning(self, "Attenzione!", message)
 
     def check_campi(self):
-        regex = r"[a-zA-Z0-9]"
         # il nome deve avere minimo 3 caratteri
         if len(self.nome.text()) > 2:
             # il cognome deve avere minimo 3 caratteri

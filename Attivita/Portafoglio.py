@@ -59,7 +59,7 @@ class Portafoglio:
                 portafogli = dict(pickle.load(f))
 
             for k, v in portafogli.items():
-                if k is self.codice:
+                if k == self.codice:
                     v.saldo -= importo
 
             with open("Dati/Portafogli.pickle", "wb") as f:

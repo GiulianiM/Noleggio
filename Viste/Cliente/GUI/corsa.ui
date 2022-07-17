@@ -33,9 +33,9 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>10</y>
+     <y>5</y>
      <width>141</width>
-     <height>16</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
@@ -55,7 +55,7 @@
     <rect>
      <x>20</x>
      <y>200</y>
-     <width>151</width>
+     <width>100</width>
      <height>80</height>
     </rect>
    </property>
@@ -70,15 +70,16 @@
 </string>
    </property>
    <property name="text">
-    <string>▶ Inizia Corsa</string>
+    <string>▶ Inizia
+  Corsa</string>
    </property>
   </widget>
   <widget class="QPushButton" name="bottone_termina_corsa">
    <property name="geometry">
     <rect>
-     <x>229</x>
+     <x>130</x>
      <y>200</y>
-     <width>151</width>
+     <width>111</width>
      <height>80</height>
     </rect>
    </property>
@@ -93,10 +94,28 @@
 </string>
    </property>
    <property name="text">
-    <string>⏹ Termina Corsa</string>
+    <string>⏹ Termina
+  Corsa</string>
    </property>
    <property name="checkable">
     <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="back_button">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>260</y>
+     <width>90</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size:20; color:white;background-color:rgb(38, 157, 206)
+</string>
+   </property>
+   <property name="text">
+    <string>Torna Indietro</string>
    </property>
   </widget>
  </widget>

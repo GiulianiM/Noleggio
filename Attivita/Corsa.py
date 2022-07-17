@@ -1,6 +1,8 @@
 import datetime
 import uuid
 
+from PyQt5.QtWidgets import QMessageBox
+
 from Attivita.Ricevuta import Ricevuta
 
 
@@ -15,16 +17,23 @@ class Corsa:
 
     def inizializza_corsa(self, mezzo):
         self.mezzo = mezzo
-        self.codice = uuid.uuid4()[:8]
+        self.codice = str(uuid.uuid4())[:8]
 
     # avvia una nuova corsa
     def avvia_corsa(self):
         self.data_inizio = datetime.datetime.now().replace(microsecond=0)
+        self.mezzo.set_disponibilita(codice_mezzo=self.mezzo.codice, disponibile=False)
 
-    # termina una corsa
+    # termina una corsa:
+    #   - imposta la data di fine
+    #   - imposta la disponibilita del mezzo a True
+    #   - crea una nuova ricevuta e la stampa a schermo
     def termina_corsa(self, cliente):
-        self.dataFine = datetime.datetime.now().replace(microsecond=0)
-        self.ricevuta = Ricevuta()
-        self.ricevuta.stilaRicevuta(codice_mezzo=self.mezzo.codice, codice_corsa=self.codice,
-                                    codice_cliente=cliente.codice, inizio=self.data_inizio, fine=self.data_fine)
+        self.data_fine = datetime.datetime.now().replace(microsecond=0)
+        self.mezzo.set_disponibilita(codice_mezzo=self.mezzo.codice, disponibile=True)
+        ricevuta = Ricevuta()
+        ricevuta.stila_ricevuta(codice_mezzo=self.mezzo.codice, codice_corsa=self.codice,
+                                codice_cliente=cliente.codice, inizio=self.data_inizio, fine=self.data_fine)
+        cliente.portafoglio.preleva_denaro(importo=ricevuta.costo_totale)
         del self
+        return ricevuta.get_ricevuta_to_string()

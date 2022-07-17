@@ -2,6 +2,8 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QDialog
 from PyQt5.uic import loadUi
 
+from Servizio.Mezzo import Mezzo
+from Viste.Cliente.VistaCorsa import Corsa, VistaCorsa
 from Viste.Cliente.Profilo import Profilo
 
 
@@ -14,10 +16,13 @@ class HomepageCliente(QDialog):
         self.bottone_profilo.clicked.connect(self.go_profilo)
         self.bottone_corsa.clicked.connect(self.go_corsa)
 
+        """m1 = Mezzo()
+        m1.inserisci_mezzo()"""
+
     def go_profilo(self):
         self.profilo = Profilo(self.cliente)
         self.profilo.show()
 
-
     def go_corsa(self):
-        pass
+        self.vista_corsa = VistaCorsa(self.cliente)
+        self.vista_corsa.show()
