@@ -1,6 +1,7 @@
 import os
 import pickle
 import uuid
+from builtins import str
 
 from Attivita.Portafoglio import Portafoglio
 
@@ -43,7 +44,7 @@ class Cliente:
             self.nome = nome
             self.cognome = cognome
             self.telefono = telefono
-            self.codicefiscale = codicefiscale
+            self.codicefiscale = str.upper(codicefiscale)
             self.codice = str(uuid.uuid4())[:8]
             self.portafoglio = Portafoglio()
             self.portafoglio.crea_portafoglio(self.codice)
@@ -82,7 +83,7 @@ class Cliente:
             with open('Dati/Clienti.pickle', 'wb') as f:
                 pickle.dump(clienti, f, pickle.HIGHEST_PROTOCOL)
             if self.portafoglio is not None:
-                self.portafoglio.rimuoviPortafoglio()
+                self.portafoglio.rimuovi_portafoglio()
             del self
         else:
             print("File non trovato")
