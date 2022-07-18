@@ -19,7 +19,7 @@ class VisualizzaStatistiche(QDialog):
         if ricevute is not None:
             for ricevuta in ricevute.values():
                 ricavo_medio += ricevuta.get_costo_totale()
-            return str(ricavo_medio / len(ricevute))
+            return str(format(ricavo_medio / len(ricevute), '.2f'))
         else:
             return str(ricavo_medio)
 
@@ -29,7 +29,7 @@ class VisualizzaStatistiche(QDialog):
         if ricevute is not None:
             for ricevuta in ricevute.values():
                 tempo_medio += ricevuta.get_tempo_utilizzo()
-            return str(tempo_medio / len(ricevute))
+            return str(format(tempo_medio / len(ricevute), '.2f'))
         else:
             return str(tempo_medio)
 

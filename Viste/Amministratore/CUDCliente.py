@@ -16,8 +16,7 @@ class CUDCliente(QDialog):
         self.bottone_elimina_cliente.clicked.connect(self.go_elimina_cliente)
         self.bottone_modifica_cliente.clicked.connect(self.go_modifica_cliente)
         self.back_button.clicked.connect(self.go_back)
-        self.bottone_modifica_cliente.setEnabled(False)
-        self.bottone_elimina_cliente.setEnabled(False)
+        self.codice_cliente_selezionato = None
         self.popola_lista_clienti()
 
     def popola_lista_clienti(self):
@@ -29,8 +28,6 @@ class CUDCliente(QDialog):
 
     def seleziona_cliente(self):
         self.codice_cliente_selezionato = self.listWidget.currentItem()
-        self.bottone_modifica_cliente.setEnabled(True)
-        self.bottone_elimina_cliente.setEnabled(True)
 
     def go_crea_cliente(self):
         self.crea_account = CreaAccount()
@@ -38,16 +35,19 @@ class CUDCliente(QDialog):
         self.crea_account.show()
 
     def go_elimina_cliente(self):
-        codice_cliente_selezionato = self.listWidget.currentItem().text().split("\n")[0].split(" ")[1]
-        print(codice_cliente_selezionato)
-        Cliente().rimuovi_cliente_codice(self.codice_cliente_selezionato.text().split("\n")[0].split(" ")[1])
-        self.popola_lista_clienti()
+        if self.codice_cliente_selezionato is not None:
+            cliente = Cliente().ricerca_cliente_codice(self.codice_cliente_selezionato.text().split("\n")[0].split(" ")[1])
+            cliente.rimuovi_cliente_codice(self.codice_cliente_selezionato.text().split("\n")[0].split(" ")[1])
+            self.popola_lista_clienti()
+            self.codice_cliente_selezionato = None
 
     def go_modifica_cliente(self):
-        cliente = Cliente().ricerca_cliente_codice(self.codice_cliente_selezionato.text().split("\n")[0].split(" ")[1])
-        self.modifica_profilo = ModificaProfilo(cliente)
-        self.modifica_profilo.closed.connect(self.popola_lista_clienti)
-        self.modifica_profilo.show()
+        if self.codice_cliente_selezionato is not None:
+            cliente = Cliente().ricerca_cliente_codice(self.codice_cliente_selezionato.text().split("\n")[0].split(" ")[1])
+            self.modifica_profilo = ModificaProfilo(cliente)
+            self.modifica_profilo.closed.connect(self.popola_lista_clienti)
+            self.modifica_profilo.show()
+            self.codice_cliente_selezionato = None
 
     def go_back(self):
         self.close()

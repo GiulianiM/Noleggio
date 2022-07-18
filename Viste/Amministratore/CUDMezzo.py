@@ -15,8 +15,7 @@ class CUDMezzo(QDialog):
         self.bottone_elimina_mezzo.clicked.connect(self.go_elimina_mezzo)
         self.bottone_modifica_mezzo.clicked.connect(self.go_modifica_mezzo)
         self.back_button.clicked.connect(self.go_back)
-        self.bottone_modifica_mezzo.setEnabled(False)
-        self.bottone_elimina_mezzo.setEnabled(False)
+        self.codice_mezzo_selezionato = None
         self.popola_lista_mezzi()
 
     def go_back(self):
@@ -31,25 +30,26 @@ class CUDMezzo(QDialog):
 
     def seleziona_mezzo(self):
         self.codice_mezzo_selezionato = self.listWidget.currentItem()
-        self.bottone_modifica_mezzo.setEnabled(True)
-        self.bottone_elimina_mezzo.setEnabled(True)
 
     def go_crea_mezzo(self):
-        m1 = Mezzo()
-        m1.inserisci_mezzo()
+        mezzo = Mezzo()
+        mezzo.inserisci_mezzo()
         self.popola_lista_mezzi()
 
     def go_elimina_mezzo(self):
-        codice_mezzo_selezionato = self.listWidget.currentItem().text().split("-")[0].split(" ")[1]
-        print(codice_mezzo_selezionato)
-        Mezzo().rimuovi_mezzo(self.codice_mezzo_selezionato.text().split("-")[0].split(" ")[1])
-        self.popola_lista_mezzi()
+        if self.codice_mezzo_selezionato is not None:
+            mezzo = Mezzo().ricerca_mezzo_codice(self.codice_mezzo_selezionato.text().split("-")[0].split(" ")[1])
+            mezzo.rimuovi_mezzo(self.codice_mezzo_selezionato.text().split("-")[0].split(" ")[1])
+            self.popola_lista_mezzi()
+            self.codice_mezzo_selezionato = None
 
     def go_modifica_mezzo(self):
-        mezzo = Mezzo().ricerca_mezzo_codice(self.codice_mezzo_selezionato.text().split("-")[0].split(" ")[1])
-        self.modifica_mezzo = ModificaMezzo(mezzo)
-        self.modifica_mezzo.closed.connect(self.popola_lista_mezzi)
-        self.modifica_mezzo.show()
+        if self.codice_mezzo_selezionato is not None:
+            mezzo = Mezzo().ricerca_mezzo_codice(self.codice_mezzo_selezionato.text().split("-")[0].split(" ")[1])
+            self.modifica_mezzo = ModificaMezzo(mezzo)
+            self.modifica_mezzo.closed.connect(self.popola_lista_mezzi)
+            self.modifica_mezzo.show()
+            self.codice_mezzo_selezionato = None
 
 
 class ModificaMezzo(QDialog):
