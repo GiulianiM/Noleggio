@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Ricevute</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../../logo.png</normaloff>../../logo.png</iconset>
+  </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(52, 52, 52);</string>
   </property>

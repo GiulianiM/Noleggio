@@ -7,11 +7,16 @@
     <x>0</x>
     <y>0</y>
     <width>600</width>
-    <height>600</height>
+    <height>603</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>CUD Mezzo</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <disabledoff>../../logo.png</disabledoff>
+   </iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(52, 52, 52);</string>

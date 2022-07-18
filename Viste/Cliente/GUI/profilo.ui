@@ -13,6 +13,11 @@
   <property name="windowTitle">
    <string>Profilo</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <selectedoff>../../logo.png</selectedoff>
+   </iconset>
+  </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(54, 54, 54);</string>
   </property>
