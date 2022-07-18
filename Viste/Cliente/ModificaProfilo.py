@@ -1,9 +1,12 @@
 from PyQt5 import QtWidgets
+from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QDialog, QMessageBox
 from PyQt5.uic import loadUi
 
 
 class ModificaProfilo(QDialog):
+    closed = pyqtSignal()
+
     def __init__(self, cliente):
         super(ModificaProfilo, self).__init__()
         loadUi("viste/cliente/gui/modifica_profilo.ui", self)
@@ -39,3 +42,6 @@ class ModificaProfilo(QDialog):
 
     def go_indietro(self):
         self.close()
+
+    def closeEvent(self, event):
+        self.closed.emit()

@@ -163,23 +163,6 @@ color: rgb(255, 255, 255);</string>
     <string>Clienti:</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="refresh_button">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>560</y>
-     <width>71</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font-size:20; color:white;background-color:rgb(38, 157, 206)
-</string>
-   </property>
-   <property name="text">
-    <string>Aggiorna</string>
-   </property>
-  </widget>
  </widget>
  <resources/>
  <connections/>

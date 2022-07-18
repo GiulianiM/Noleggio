@@ -54,11 +54,11 @@ class Signup(QDialog):
     def createaccfunction(self):
         # if self.check_campi():
         cliente = Cliente()
-        nome = self.nome.text().capitalize()
-        cognome = self.cognome.text().capitalize()
-        cf = self.cf.text().upper()
-        telefono = self.telefono.text()
-        password = self.password.text()
+        nome = self.nome.text().capitalize().strip()
+        cognome = self.cognome.text().capitalize().strip()
+        cf = self.cf.text().upper().strip()
+        telefono = self.telefono.text().strip()
+        password = self.password.text().strip()
         if Signup.check_campi(self):
             cliente, message = cliente.crea_cliente(nome=nome, cognome=cognome, telefono=telefono, codicefiscale=cf,
                                                     password=password)

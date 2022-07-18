@@ -60,3 +60,9 @@ class Mezzo:
             del self
         else:
             print('File non trovato')
+
+    def get_mezzo_to_string(self):
+        if self.disponibile:
+            return "\nCodice: " + self.codice + " - Disponibile\n"
+        else:
+            return "\nCodice: " + self.codice + " - Non disponibile\n"

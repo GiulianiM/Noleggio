@@ -1,8 +1,10 @@
 from PyQt5 import QtWidgets
+from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QDialog, QMessageBox
 from PyQt5.uic import loadUi
 
 from Attivita.Cliente import Cliente
+from Viste.Cliente.ModificaProfilo import ModificaProfilo
 
 
 class CUDCliente(QDialog):
@@ -14,7 +16,6 @@ class CUDCliente(QDialog):
         self.bottone_elimina_cliente.clicked.connect(self.go_elimina_cliente)
         self.bottone_modifica_cliente.clicked.connect(self.go_modifica_cliente)
         self.back_button.clicked.connect(self.go_back)
-        self.refresh_button.clicked.connect(self.popola_lista_clienti)
         self.bottone_modifica_cliente.setEnabled(False)
         self.bottone_elimina_cliente.setEnabled(False)
         self.popola_lista_clienti()
@@ -33,6 +34,7 @@ class CUDCliente(QDialog):
 
     def go_crea_cliente(self):
         self.crea_account = CreaAccount()
+        self.crea_account.closed.connect(self.popola_lista_clienti)
         self.crea_account.show()
 
     def go_elimina_cliente(self):
@@ -42,13 +44,18 @@ class CUDCliente(QDialog):
         self.popola_lista_clienti()
 
     def go_modifica_cliente(self):
-        pass
+        cliente = Cliente().ricerca_cliente_codice(self.codice_cliente_selezionato.text().split("\n")[0].split(" ")[1])
+        self.modifica_profilo = ModificaProfilo(cliente)
+        self.modifica_profilo.closed.connect(self.popola_lista_clienti)
+        self.modifica_profilo.show()
 
     def go_back(self):
         self.close()
 
 
 class CreaAccount(QDialog):
+    closed = pyqtSignal()
+
     def __init__(self):
         super(CreaAccount, self).__init__()
         loadUi("Viste/Accesso/GUI/createacc.ui", self)
@@ -58,11 +65,11 @@ class CreaAccount(QDialog):
     def createaccfunction(self):
         # if self.check_campi():
         cliente = Cliente()
-        nome = self.nome.text().capitalize()
-        cognome = self.cognome.text().capitalize()
-        cf = self.cf.text().upper()
-        telefono = self.telefono.text()
-        password = self.password.text()
+        nome = self.nome.text().capitalize().strip()
+        cognome = self.cognome.text().capitalize().strip()
+        cf = self.cf.text().upper().strip()
+        telefono = self.telefono.text().strip()
+        password = self.password.text().strip()
         if CreaAccount.check_campi(self):
             cliente, message = cliente.crea_cliente(nome=nome, cognome=cognome, telefono=telefono, codicefiscale=cf,
                                                     password=password)
@@ -71,6 +78,9 @@ class CreaAccount(QDialog):
                 self.close()
             else:
                 QMessageBox.warning(self, "Attenzione!", message)
+
+    def closeEvent(self, event):
+        self.closed.emit()
 
     def check_campi(self):
         # il nome deve avere minimo 3 caratteri

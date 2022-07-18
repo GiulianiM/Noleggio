@@ -6,23 +6,29 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>463</width>
-    <height>252</height>
+    <width>477</width>
+    <height>347</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <pointsize>13</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
-   <string>Statistiche</string>
+   <string>Modifica Mezzo</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(52, 52, 52);</string>
+   <string notr="true">background-color: rgb(52, 52, 52);
+</string>
   </property>
-  <widget class="QLabel" name="tempo_label">
+  <widget class="QLabel" name="id_label">
    <property name="geometry">
     <rect>
      <x>30</x>
      <y>40</y>
-     <width>191</width>
-     <height>31</height>
+     <width>60</width>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -34,16 +40,37 @@
     <string notr="true">color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
-    <string>Tempo medio di utilizzo:</string>
+    <string>Mezzo: </string>
    </property>
   </widget>
-  <widget class="QLabel" name="ricavo_label">
+  <widget class="QLabel" name="id_label_to_edit">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>40</y>
+     <width>151</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>13</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="disponibile_label">
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>100</y>
-     <width>150</width>
-     <height>31</height>
+     <y>90</y>
+     <width>111</width>
+     <height>30</height>
     </rect>
    </property>
    <property name="font">
@@ -55,17 +82,43 @@
     <string notr="true">color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
-    <string>Ricavo medio:</string>
+    <string>Disponibilità:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="disponibile_label_to_edit">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>90</y>
+     <width>151</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>13</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
   <widget class="QPushButton" name="back_button">
    <property name="geometry">
     <rect>
      <x>360</x>
-     <y>210</y>
-     <width>90</width>
+     <y>310</y>
+     <width>91</width>
      <height>24</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
    </property>
    <property name="styleSheet">
     <string notr="true">font-size:20; color:white;background-color:rgb(38, 157, 206)
@@ -75,88 +128,51 @@
     <string>Torna Indietro</string>
    </property>
   </widget>
-  <widget class="QLabel" name="ricavo_label_to_edit">
-   <property name="geometry">
-    <rect>
-     <x>280</x>
-     <y>100</y>
-     <width>151</width>
-     <height>30</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>13</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: rgb(255, 255, 255);</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QLabel" name="num_corse_label_to_edit">
-   <property name="geometry">
-    <rect>
-     <x>280</x>
-     <y>160</y>
-     <width>151</width>
-     <height>30</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>13</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: rgb(255, 255, 255);</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QLabel" name="tempo_label_to_edit">
-   <property name="geometry">
-    <rect>
-     <x>280</x>
-     <y>40</y>
-     <width>151</width>
-     <height>30</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>13</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: rgb(255, 255, 255);</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QLabel" name="num_corse_label">
+  <widget class="QPushButton" name="disponibile_button">
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>160</y>
-     <width>150</width>
-     <height>31</height>
+     <y>280</y>
+     <width>91</width>
+     <height>51</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>13</pointsize>
+     <pointsize>9</pointsize>
+     <bold>true</bold>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: rgb(255, 255, 255);</string>
+    <string notr="true">font-size:20; color:white;background-color:rgb(38, 157, 206)
+</string>
    </property>
    <property name="text">
-    <string>Numero corse:</string>
+    <string>Disponibile</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="non_disponibile_button">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>280</y>
+     <width>91</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-size:20; color:white;background-color:rgb(38, 157, 206)
+</string>
+   </property>
+   <property name="text">
+    <string>Non
+ disponibile</string>
    </property>
   </widget>
  </widget>
