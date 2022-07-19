@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>463</width>
+    <width>533</width>
     <height>252</height>
    </rect>
   </property>
@@ -26,7 +26,7 @@
     <rect>
      <x>30</x>
      <y>40</y>
-     <width>191</width>
+     <width>241</width>
      <height>31</height>
     </rect>
    </property>
@@ -66,7 +66,7 @@
   <widget class="QPushButton" name="back_button">
    <property name="geometry">
     <rect>
-     <x>360</x>
+     <x>420</x>
      <y>210</y>
      <width>90</width>
      <height>24</height>
@@ -83,7 +83,7 @@
   <widget class="QLabel" name="ricavo_label_to_edit">
    <property name="geometry">
     <rect>
-     <x>280</x>
+     <x>310</x>
      <y>100</y>
      <width>151</width>
      <height>30</height>
@@ -104,7 +104,7 @@
   <widget class="QLabel" name="num_corse_label_to_edit">
    <property name="geometry">
     <rect>
-     <x>280</x>
+     <x>310</x>
      <y>160</y>
      <width>151</width>
      <height>30</height>
@@ -125,7 +125,7 @@
   <widget class="QLabel" name="tempo_label_to_edit">
    <property name="geometry">
     <rect>
-     <x>280</x>
+     <x>310</x>
      <y>40</y>
      <width>151</width>
      <height>30</height>

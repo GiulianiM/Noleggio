@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>539</width>
-    <height>318</height>
+    <width>584</width>
+    <height>305</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -66,7 +66,7 @@
   <widget class="QLabel" name="logo">
    <property name="geometry">
     <rect>
-     <x>220</x>
+     <x>240</x>
      <y>40</y>
      <width>90</width>
      <height>90</height>
@@ -86,14 +86,15 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>220</y>
-     <width>160</width>
+     <y>190</y>
+     <width>181</width>
      <height>60</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <pointsize>13</pointsize>
+     <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
@@ -108,15 +109,16 @@
   <widget class="QPushButton" name="bottone_cud_mezzo">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>220</y>
-     <width>160</width>
+     <x>390</x>
+     <y>190</y>
+     <width>181</width>
      <height>60</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <pointsize>13</pointsize>
+     <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
@@ -131,15 +133,16 @@
   <widget class="QPushButton" name="bottone_visualizza_statistiche">
    <property name="geometry">
     <rect>
-     <x>190</x>
-     <y>220</y>
-     <width>160</width>
+     <x>200</x>
+     <y>190</y>
+     <width>181</width>
      <height>60</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <pointsize>13</pointsize>
+     <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>

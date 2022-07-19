@@ -44,7 +44,7 @@
      <x>30</x>
      <y>30</y>
      <width>61</width>
-     <height>16</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="font">
@@ -64,8 +64,8 @@
     <rect>
      <x>110</x>
      <y>30</y>
-     <width>49</width>
-     <height>16</height>
+     <width>111</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="font">
@@ -103,8 +103,8 @@
     <rect>
      <x>30</x>
      <y>110</y>
-     <width>101</width>
-     <height>16</height>
+     <width>151</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="font">
@@ -116,7 +116,7 @@
     <string notr="true">color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
-    <string>Versa Denaro</string>
+    <string>Versa Denaro:</string>
    </property>
   </widget>
   <widget class="QPushButton" name="confirm_button">

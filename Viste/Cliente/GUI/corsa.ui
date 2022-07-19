@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>485</width>
+    <height>364</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,7 +27,7 @@
      <x>20</x>
      <y>40</y>
      <width>361</width>
-     <height>141</height>
+     <height>161</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -39,7 +39,7 @@
     <rect>
      <x>20</x>
      <y>5</y>
-     <width>141</width>
+     <width>201</width>
      <height>31</height>
     </rect>
    </property>
@@ -59,14 +59,15 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>200</y>
-     <width>100</width>
+     <y>220</y>
+     <width>171</width>
      <height>80</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <pointsize>13</pointsize>
+     <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
@@ -82,15 +83,16 @@
   <widget class="QPushButton" name="bottone_termina_corsa">
    <property name="geometry">
     <rect>
-     <x>130</x>
-     <y>200</y>
-     <width>111</width>
+     <x>210</x>
+     <y>220</y>
+     <width>171</width>
      <height>80</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <pointsize>13</pointsize>
+     <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
@@ -109,8 +111,8 @@
   <widget class="QPushButton" name="back_button">
    <property name="geometry">
     <rect>
-     <x>300</x>
-     <y>260</y>
+     <x>380</x>
+     <y>320</y>
      <width>90</width>
      <height>24</height>
     </rect>

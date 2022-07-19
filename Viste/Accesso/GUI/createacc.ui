@@ -62,9 +62,9 @@ font: 20pt &quot;Segoe UI&quot;;</string>
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>240</y>
-     <width>141</width>
-     <height>36</height>
+     <y>230</y>
+     <width>151</width>
+     <height>51</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -151,7 +151,7 @@ font: 20pt &quot;Segoe UI&quot;;</string>
     <rect>
      <x>20</x>
      <y>280</y>
-     <width>201</width>
+     <width>211</width>
      <height>36</height>
     </rect>
    </property>
@@ -226,7 +226,7 @@ font: 20pt &quot;Segoe UI&quot;;</string>
 font: 20pt &quot;Segoe UI&quot;;</string>
    </property>
    <property name="text">
-    <string>Telefono</string>
+    <string>Telefono:</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="telefono">
@@ -245,6 +245,19 @@ font: 20pt &quot;Segoe UI&quot;;</string>
     <string/>
    </property>
   </widget>
+  <zorder>label_5</zorder>
+  <zorder>label</zorder>
+  <zorder>label_3</zorder>
+  <zorder>label_4</zorder>
+  <zorder>nome</zorder>
+  <zorder>password</zorder>
+  <zorder>signupbutton</zorder>
+  <zorder>label_6</zorder>
+  <zorder>cognome</zorder>
+  <zorder>cf</zorder>
+  <zorder>label_7</zorder>
+  <zorder>telefono</zorder>
+  <zorder>label_2</zorder>
  </widget>
  <resources/>
  <connections/>
