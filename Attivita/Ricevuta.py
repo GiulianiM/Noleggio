@@ -44,7 +44,7 @@ class Ricevuta:
 
     # ritorna il trempo totale di utilizzo del mezzo
     def get_tempo_utilizzo(self):
-        return round(int((self.fine - self.inizio).total_seconds()) / 60, 2)
+        return (self.fine - self.inizio).total_seconds()
 
     # funzione che restituisce un dizionario di tutte le ricevute
     def get_ricevute(self):
@@ -57,11 +57,18 @@ class Ricevuta:
 
     # funzione che stampa a schermo la ricevuta
     def get_ricevuta_to_string(self):
-        return "Costo per minuto: " + str(Monopattino().costo_minuto) + "\n" + \
-               "Minuti utilizzati: " + str(self.tempo_utilizzo) + "\n" + \
-               "Costo totale: " + str(self.costo_totale) + "\n" + \
-               "Data inizio: " + str(self.inizio) + "\n" + \
-               "Data fine: " + str(self.fine) + "\n"
+        if self.get_tempo_utilizzo() >= 60:
+            return "Costo per minuto: " + str(Monopattino().costo_minuto) + "\n" + \
+                   "Minuti utilizzati: " + str(format(self.get_tempo_utilizzo() / 60, '.1f')) + "\n" + \
+                   "Costo totale: " + str(self.costo_totale) + "\n" + \
+                   "Data inizio: " + str(self.inizio) + "\n" + \
+                   "Data fine: " + str(self.fine) + "\n"
+        else:
+            return "Costo per minuto: " + str(Monopattino().costo_minuto) + "\n" + \
+                   "Secondi utilizzati: " + str(self.get_tempo_utilizzo()) + "\n" + \
+                   "Costo totale: " + str(self.costo_totale) + "\n" + \
+                   "Data inizio: " + str(self.inizio) + "\n" + \
+                   "Data fine: " + str(self.fine) + "\n"
 
     # funzione che restituisce la lista di tutte le ricevute di un cliente specifico
     def get_ricevute_cliente(self, codice_cliente):

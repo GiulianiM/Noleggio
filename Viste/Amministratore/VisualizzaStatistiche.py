@@ -10,7 +10,7 @@ class VisualizzaStatistiche(QDialog):
         loadUi('Viste/Amministratore/GUI/statistiche.ui', self)
         self.back_button.clicked.connect(self.go_back)
         self.ricavo_label_to_edit.setText(self.get_ricavo_medio() + " €")
-        self.tempo_label_to_edit.setText(self.get_tempo_medio() + " min")
+        self.tempo_label_to_edit.setText(self.get_tempo_medio())
         self.num_corse_label_to_edit.setText(str(len(Ricevuta().get_ricevute())))
 
     def get_ricavo_medio(self):
@@ -29,7 +29,10 @@ class VisualizzaStatistiche(QDialog):
         if ricevute is not None:
             for ricevuta in ricevute.values():
                 tempo_medio += ricevuta.get_tempo_utilizzo()
-            return str(format(tempo_medio / len(ricevute), '.2f'))
+            if tempo_medio >= 60:
+                return str(format((tempo_medio / 60) / len(ricevute), '.1f')) + " minuti"
+            else:
+                return str(format(tempo_medio / len(ricevute), '.1f')) + " secondi"
         else:
             return str(tempo_medio)
 
