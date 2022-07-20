@@ -1,6 +1,8 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QDialog
 from PyQt5.uic import loadUi
+
+from Gestione.Backup import Backup
 from Viste.Amministratore.CUDCliente import CUDCliente
 from Viste.Amministratore.CUDMezzo import CUDMezzo
 from Viste.Amministratore.VisualizzaStatistiche import VisualizzaStatistiche
@@ -29,3 +31,6 @@ class ControlPanel(QDialog):
         self.visualizza_statistiche = VisualizzaStatistiche()
         self.visualizza_statistiche.show()
         self.widget.setCurrentIndex(self.widget.currentIndex() + 1)
+
+    def closeEvent(self, event):
+        Backup().esegui_backup()

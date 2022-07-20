@@ -2,7 +2,7 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QDialog
 from PyQt5.uic import loadUi
 
-from Servizio.Mezzo import Mezzo
+from Gestione.Backup import Backup
 from Viste.Cliente.VistaCorsa import Corsa, VistaCorsa
 from Viste.Cliente.Profilo import Profilo
 
@@ -26,3 +26,6 @@ class HomepageCliente(QDialog):
     def go_corsa(self):
         self.vista_corsa = VistaCorsa(self.cliente)
         self.vista_corsa.show()
+
+    def closeEvent(self, event):
+        Backup().esegui_backup()
