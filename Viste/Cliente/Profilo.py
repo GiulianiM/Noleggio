@@ -1,4 +1,4 @@
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QDialog
 from PyQt5.uic import loadUi
 
@@ -24,6 +24,7 @@ class Profilo(QDialog):
         self.bottone_modifica.clicked.connect(self.go_modifica_profilo)
         self.bottone_visualizza_portafoglio.clicked.connect(self.go_visualizza_portafoglio)
         self.bottone_visualizza_ricevute.clicked.connect(self.go_visualizza_ricevute)
+        self.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
 
     def go_modifica_profilo(self):
         self.modifica_profilo = ModificaProfilo(self.cliente)

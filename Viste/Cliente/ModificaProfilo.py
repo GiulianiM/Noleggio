@@ -1,4 +1,4 @@
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QDialog, QMessageBox
 from PyQt5.uic import loadUi
@@ -17,6 +17,7 @@ class ModificaProfilo(QDialog):
         self.new_pw_input_check.setEchoMode(QtWidgets.QLineEdit.Password)
         self.confirm_button.clicked.connect(self.go_conferma_modifiche)
         self.back_button.clicked.connect(self.go_indietro)
+        self.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
 
     # eseguo i segenti controlli:
     # 1) le password non devono essere vuote

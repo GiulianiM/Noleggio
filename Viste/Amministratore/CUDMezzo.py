@@ -1,4 +1,4 @@
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QDialog
 from PyQt5.uic import loadUi
@@ -16,7 +16,39 @@ class CUDMezzo(QDialog):
         self.bottone_modifica_mezzo.clicked.connect(self.go_modifica_mezzo)
         self.back_button.clicked.connect(self.go_back)
         self.codice_mezzo_selezionato = None
+        self.listWidget.setStyleSheet("""
+                QListView {
+                    background-color: rgb(127, 127, 127);
+                    color: rgb(255, 255, 255);
+                    }
+                QScrollBar:vertical {              
+                    border: none;
+                    background:white;
+                    width:3px;
+                    margin: 0px 0px 0px 0px;
+                }
+                QScrollBar::handle:vertical {
+                    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                    stop: 0 rgb(38, 157, 206), stop: 0.5 rgb(38, 157, 206), stop:1 rgb(38, 157, 206));
+                    min-height: 0px;
+                }
+                QScrollBar::add-line:vertical {
+                    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                    stop: 0 rgb(38, 157, 206), stop: 0.5 rgb(38, 157, 206),  stop:1 rgb(38, 157, 206));
+                    height: 0px;
+                    subcontrol-position: bottom;
+                    subcontrol-origin: margin;
+                }
+                QScrollBar::sub-line:vertical {
+                    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                    stop: 0  rgb(38, 157, 206), stop: 0.5 rgb(38, 157, 206),  stop:1 rgb(38, 157, 206));
+                    height: 0 px;
+                    subcontrol-position: top;
+                    subcontrol-origin: margin;
+                }
+            """)
         self.popola_lista_mezzi()
+        self.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
 
     def go_back(self):
         self.close()
@@ -63,6 +95,7 @@ class ModificaMezzo(QDialog):
         self.non_disponibile_button.clicked.connect(self.go_non_disponibile)
         self.back_button.clicked.connect(self.go_back)
         self.id_label_to_edit.setText(str(mezzo.codice))
+        self.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
         if mezzo.disponibile:
             self.disponibile_label_to_edit.setText("Disponibile")
             self.disponibile_button.setChecked(False)

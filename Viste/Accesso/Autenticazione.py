@@ -1,4 +1,4 @@
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QDialog, QMessageBox
 from PyQt5.uic import loadUi
 
@@ -16,6 +16,7 @@ class Login(QDialog):
         self.loginbutton.clicked.connect(self.loginfunction)
         self.password.setEchoMode(QtWidgets.QLineEdit.Password)
         self.createaccbutton.clicked.connect(self.gotocreate)
+        self.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
 
     def loginfunction(self):
         id = self.id.text().strip()
@@ -50,6 +51,7 @@ class Signup(QDialog):
         loadUi("Viste/Accesso/GUI/createacc.ui", self)
         self.signupbutton.clicked.connect(self.createaccfunction)
         self.password.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
 
     def createaccfunction(self):
         # if self.check_campi():

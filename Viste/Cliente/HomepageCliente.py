@@ -1,4 +1,4 @@
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QDialog
 from PyQt5.uic import loadUi
 
@@ -15,6 +15,7 @@ class HomepageCliente(QDialog):
         self.widget = QtWidgets.QStackedWidget()
         self.bottone_profilo.clicked.connect(self.go_profilo)
         self.bottone_corsa.clicked.connect(self.go_corsa)
+        self.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
 
         """m1 = Mezzo()
         m1.inserisci_mezzo()"""

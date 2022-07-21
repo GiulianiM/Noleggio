@@ -1,4 +1,4 @@
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QDialog
 from PyQt5.uic import loadUi
 
@@ -16,6 +16,7 @@ class ControlPanel(QDialog):
         self.bottone_cud_cliente.clicked.connect(self.go_CUD_cliente)
         self.bottone_cud_mezzo.clicked.connect(self.go_CUD_mezzi)
         self.bottone_visualizza_statistiche.clicked.connect(self.go_visualizza_statistiche)
+        self.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
 
     def go_CUD_cliente(self):
         self.cud_cliente = CUDCliente()

@@ -1,3 +1,4 @@
+from PyQt5 import QtCore
 from PyQt5.QtWidgets import QDialog, QMessageBox
 from PyQt5.uic import loadUi
 
@@ -18,6 +19,7 @@ class VistaCorsa(QDialog):
         self.bottone_inizia_corsa.setEnabled(False)
         self.bottone_termina_corsa.setEnabled(False)
         self.popola_lista_mezzi()
+        self.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
 
     # mostra una lista di mezzi disponibili (i loro codici)
     def popola_lista_mezzi(self):
@@ -62,8 +64,11 @@ class VistaCorsa(QDialog):
     #  - aggiorno la lista dei mezzi disponibili
     def go_termina_corsa(self):
         self.bottone_termina_corsa.setEnabled(False)
-        message = self.corsa.termina_corsa(self.cliente)
-        QMessageBox.information(self, "Ricevuta", message)
+        message = self.corsa.termina_corsa(self.cliente).split("\n")
+        message_to_print = '<p style= color:white>' + message[0] + '</p>' + '<p style= color:white>' + message[1] + \
+                           '</p>' + '<p style= color:white>' + message[2] + '</p>' + \
+                           '<p style= color:white>' + message[3] + '</p>' + '<p style= color:white>' + message[4]
+        QMessageBox.information(self, "Ricevuta", message_to_print)
         self.popola_lista_mezzi()
 
     def go_indietro(self):
