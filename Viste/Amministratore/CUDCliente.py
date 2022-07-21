@@ -5,18 +5,19 @@ from PyQt5.uic import loadUi
 
 from Attivita.Cliente import Cliente
 from Viste.Cliente.ModificaProfilo import ModificaProfilo
+import Viste.Accesso.Autenticazione as Autenticazione
 
 
 class CUDCliente(QDialog):
     def __init__(self):
         super().__init__()
         loadUi("Viste/Amministratore/GUI/cud_cliente.ui", self)
-        self.widget = QtWidgets.QStackedWidget()
+        self.codice_cliente_selezionato = None
+
         self.bottone_crea_cliente.clicked.connect(self.go_crea_cliente)
         self.bottone_elimina_cliente.clicked.connect(self.go_elimina_cliente)
         self.bottone_modifica_cliente.clicked.connect(self.go_modifica_cliente)
         self.back_button.clicked.connect(self.go_back)
-        self.codice_cliente_selezionato = None
         self.listWidget.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
         self.listWidget.setStyleSheet("""
         QListView {
@@ -63,21 +64,20 @@ class CUDCliente(QDialog):
         self.codice_cliente_selezionato = self.listWidget.currentItem()
 
     def go_crea_cliente(self):
-        self.crea_account = CreaAccount()
+        self.crea_account = Autenticazione.Signup(False)
         self.crea_account.closed.connect(self.popola_lista_clienti)
         self.crea_account.show()
 
     def go_elimina_cliente(self):
         if self.codice_cliente_selezionato is not None:
-            cliente = Cliente().ricerca_cliente_codice(self.codice_cliente_selezionato.text().split("\n")[0].split(" ")[1])
-            cliente.rimuovi_cliente_codice(self.codice_cliente_selezionato.text().split("\n")[0].split(" ")[1])
+            message = Cliente().rimuovi_cliente_codice(self.codice_cliente_selezionato.text().split("\n")[0].split(" ")[1])
+            QMessageBox.information(self, "Rimozione cliente", message)
             self.popola_lista_clienti()
             self.codice_cliente_selezionato = None
 
     def go_modifica_cliente(self):
         if self.codice_cliente_selezionato is not None:
-            cliente = Cliente().ricerca_cliente_codice(self.codice_cliente_selezionato.text().split("\n")[0].split(" ")[1])
-            self.modifica_profilo = ModificaProfilo(cliente)
+            self.modifica_profilo = ModificaProfilo(self.codice_cliente_selezionato.text().split("\n")[0].split(" ")[1])
             self.modifica_profilo.closed.connect(self.popola_lista_clienti)
             self.modifica_profilo.show()
             self.codice_cliente_selezionato = None
@@ -85,53 +85,3 @@ class CUDCliente(QDialog):
     def go_back(self):
         self.close()
 
-
-class CreaAccount(QDialog):
-    closed = pyqtSignal()
-
-    def __init__(self):
-        super(CreaAccount, self).__init__()
-        loadUi("Viste/Accesso/GUI/createacc.ui", self)
-        self.signupbutton.clicked.connect(self.createaccfunction)
-        self.password.setEchoMode(QtWidgets.QLineEdit.Password)
-        self.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
-
-    def createaccfunction(self):
-        # if self.check_campi():
-        cliente = Cliente()
-        nome = self.nome.text().capitalize().strip()
-        cognome = self.cognome.text().capitalize().strip()
-        cf = self.cf.text().upper().strip()
-        telefono = self.telefono.text().strip()
-        password = self.password.text().strip()
-        if CreaAccount.check_campi(self):
-            cliente, message = cliente.crea_cliente(nome=nome, cognome=cognome, telefono=telefono, codicefiscale=cf,
-                                                    password=password)
-            if cliente is not None:
-                QMessageBox.information(self, "Attenzione!", message + "codice: " + str(cliente.codice) + " password: " + str(cliente.password))
-                self.close()
-            else:
-                QMessageBox.warning(self, "Attenzione!", message)
-
-    def closeEvent(self, event):
-        self.closed.emit()
-
-    def check_campi(self):
-        # il nome deve avere minimo 3 caratteri
-        if len(self.nome.text()) > 2:
-            # il cognome deve avere minimo 3 caratteri
-            if len(self.cognome.text()) > 2:
-                # il codice fiscale deve essere esattamente di 16 caratteri
-                if len(self.cf.text()) == 16 and self.cf.text().isalnum():
-                    # il numero di telefono puo avere solo 10 cifre
-                    if len(self.telefono.text()) == 10 and str(self.telefono.text()).isnumeric():
-                        return True
-                    else:
-                        QMessageBox.warning(self, "Attenzione!", "Il numero di telefono puo contenere solo 10 cifre")
-                else:
-                    QMessageBox.warning(self, "Attenzione!", "Il codice fiscale puo contenere solo 16 caratteri")
-            else:
-                QMessageBox.warning(self, "Attenzione!", "Il cognome deve avere almeno 3 caratteri")
-        else:
-            QMessageBox.warning(self, "Attenzione!", "Il nome deve avere almeno 3 caratteri")
-        return False

@@ -35,7 +35,6 @@ class Portafoglio:
 
     # versa il denaro nel portafoglio del cliente
     def versa_denaro(self, importo):
-        print(format(self.saldo, '0.2f'))
         self.saldo += importo
 
         if os.path.isfile("Dati/Portafogli.pickle"):
@@ -48,7 +47,7 @@ class Portafoglio:
 
             with open("Dati/Portafogli.pickle", "wb") as f:
                 pickle.dump(portafogli, f, pickle.HIGHEST_PROTOCOL)
-            return format(self.saldo, '0.2f') , "Importo versato correttamente"
+            return format(self.saldo, '0.2f'), "Importo versato correttamente"
 
     # preleva il denaro dal portafoglio del cliente
     def preleva_denaro(self, importo):

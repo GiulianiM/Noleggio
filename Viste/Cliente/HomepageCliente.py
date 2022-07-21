@@ -17,9 +17,6 @@ class HomepageCliente(QDialog):
         self.bottone_corsa.clicked.connect(self.go_corsa)
         self.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
 
-        """m1 = Mezzo()
-        m1.inserisci_mezzo()"""
-
     def go_profilo(self):
         self.profilo = Profilo(self.cliente)
         self.profilo.show()
@@ -28,5 +25,3 @@ class HomepageCliente(QDialog):
         self.vista_corsa = VistaCorsa(self.cliente)
         self.vista_corsa.show()
 
-    def closeEvent(self, event):
-        Backup().esegui_backup()

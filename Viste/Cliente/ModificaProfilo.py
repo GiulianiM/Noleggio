@@ -26,6 +26,13 @@ class ModificaProfilo(QDialog):
     # 4) se la nuova password è uguale alla nuova
 
     def go_conferma_modifiche(self):
+        if self.check_campi():
+            message = self.cliente.modifica_cliente(nuova_pwd=self.new_pw_input.text(),
+                                                    codice_cliente=self.cliente.codice)
+            QMessageBox.information(self, "Attenzione!", '<p style=color:white>{}</p>'.format(message))
+            self.close()
+
+    def check_campi(self):
         if len(self.old_pw_input.text()) <= 0 or len(self.new_pw_input.text()) <= 0 or len(
                 self.new_pw_input_check.text()) <= 0:
             QMessageBox.warning(self, "Attenzione!", '<p style=color:white>Compilare tutti i campi</p>')
@@ -36,10 +43,7 @@ class ModificaProfilo(QDialog):
         elif self.new_pw_input.text() == self.old_pw_input.text() or self.new_pw_input_check.text() == self.old_pw_input.text():
             QMessageBox.warning(self, "Attenzione!", '<p style=color:white>La nuova password è uguale alla vecchia</p>')
         else:
-            message = self.cliente.modifica_cliente(nuova_pwd=self.new_pw_input.text(),
-                                                    codice_cliente=self.cliente.codice)
-            QMessageBox.information(self, "Attenzione!", '<p style=color:white>{}</p>'.format(message))
-            self.close()
+            return True
 
     def go_indietro(self):
         self.close()

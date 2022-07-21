@@ -46,26 +46,30 @@ class Login(QDialog):
 
 
 class Signup(QDialog):
-    def __init__(self):
+    closed = QtCore.pyqtSignal()
+
+    def __init__(self, is_cliente=True):
         super(Signup, self).__init__()
         loadUi("Viste/Accesso/GUI/createacc.ui", self)
-        self.signupbutton.clicked.connect(self.createaccfunction)
+        self.is_cliente = is_cliente
+        self.signupbutton.clicked.connect(self.crea_account)
         self.password.setEchoMode(QtWidgets.QLineEdit.Password)
         self.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
 
-    def createaccfunction(self):
-        # if self.check_campi():
-        cliente = Cliente()
-        nome = self.nome.text().capitalize().strip()
-        cognome = self.cognome.text().capitalize().strip()
-        cf = self.cf.text().upper().strip()
-        telefono = self.telefono.text().strip()
-        password = self.password.text().strip()
-        if Signup.check_campi(self):
+    def crea_account(self):
+        if self.check_campi():
+            nome = self.nome.text().capitalize().strip()
+            cognome = self.cognome.text().capitalize().strip()
+            cf = self.cf.text().upper().strip()
+            telefono = self.telefono.text().strip()
+            password = self.password.text().strip()
+            cliente = Cliente()
             cliente, message = cliente.crea_cliente(nome=nome, cognome=cognome, telefono=telefono, codicefiscale=cf,
                                                     password=password)
             if cliente is not None:
-                message_to_print = '<p style=color:white>{}<br>con codice: "{}" e password: "{}"</p>'.format(message, str(cliente.codice), str(cliente.password))
+                message_to_print = '<p style=color:white>{}<br>con codice: "{}" e password: "{}"</p>'.format(message,
+                                                                                                             str(cliente.codice),
+                                                                                                             str(cliente.password))
                 mb = QMessageBox()
                 mb.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
                 mb.setWindowTitle("Account creato")
@@ -73,9 +77,11 @@ class Signup(QDialog):
                 mb.setStyleSheet("background-color: rgb(54, 54, 54); color: white;")
                 mb.setText(message_to_print)
                 mb.exec()
-                self.homepage_cliente = HomepageCliente(cliente)
-                self.homepage_cliente.show()
-                self.close()
+
+                if self.is_cliente:
+                    self.homepage_cliente = HomepageCliente(cliente)
+                    self.homepage_cliente.show()
+                    self.close()
             else:
                 QMessageBox.warning(self, "Attenzione!", message)
 

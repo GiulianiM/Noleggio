@@ -32,6 +32,3 @@ class ControlPanel(QDialog):
         self.visualizza_statistiche = VisualizzaStatistiche()
         self.visualizza_statistiche.show()
         self.widget.setCurrentIndex(self.widget.currentIndex() + 1)
-
-    def closeEvent(self, event):
-        Backup().esegui_backup()
