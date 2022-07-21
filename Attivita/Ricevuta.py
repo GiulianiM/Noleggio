@@ -40,8 +40,7 @@ class Ricevuta:
 
     # ritorna il costo totale della corsa
     def get_costo_totale(self):
-        return round(self.tempo_utilizzo * Monopattino().costo_minuto, 2)
-
+        return round(self.tempo_utilizzo / 60 * Monopattino().costo_minuto, 2)
     # ritorna il trempo totale di utilizzo del mezzo
     def get_tempo_utilizzo(self):
         return (self.fine - self.inizio).total_seconds()
@@ -58,15 +57,15 @@ class Ricevuta:
     # funzione che stampa a schermo la ricevuta
     def get_ricevuta_to_string(self):
         if self.get_tempo_utilizzo() >= 60:
-            return "Costo per minuto: " + str(Monopattino().costo_minuto) + "\n" + \
+            return "Costo per minuto: " + str(Monopattino().costo_minuto) + " €/min\n" + \
                    "Minuti utilizzati: " + str(format(self.get_tempo_utilizzo() / 60, '.1f')) + "\n" + \
-                   "Costo totale: " + str(self.costo_totale) + "\n" + \
+                   "Costo totale: " + str(self.costo_totale) + " €\n" + \
                    "Data inizio: " + str(self.inizio) + "\n" + \
                    "Data fine: " + str(self.fine) + "\n"
         else:
-            return "Costo per minuto: " + str(Monopattino().costo_minuto) + "\n" + \
+            return "Costo per minuto: " + str(Monopattino().costo_minuto) + " €/min\n" + \
                    "Secondi utilizzati: " + str(self.get_tempo_utilizzo()) + "\n" + \
-                   "Costo totale: " + str(self.costo_totale) + "\n" + \
+                   "Costo totale: " + str(self.costo_totale) + " €\n" + \
                    "Data inizio: " + str(self.inizio) + "\n" + \
                    "Data fine: " + str(self.fine) + "\n"
 

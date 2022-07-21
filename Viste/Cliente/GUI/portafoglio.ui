@@ -103,8 +103,8 @@
     <rect>
      <x>30</x>
      <y>110</y>
-     <width>151</width>
-     <height>21</height>
+     <width>221</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
@@ -116,7 +116,7 @@
     <string notr="true">color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
-    <string>Versa Denaro:</string>
+    <string>Versa Denaro (€):</string>
    </property>
   </widget>
   <widget class="QPushButton" name="confirm_button">

@@ -24,9 +24,9 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>220</x>
+     <x>150</x>
      <y>100</y>
-     <width>151</width>
+     <width>291</width>
      <height>81</height>
     </rect>
    </property>
@@ -35,7 +35,7 @@
 font: 28pt &quot;Segoe UI&quot;;</string>
    </property>
    <property name="text">
-    <string>Signup</string>
+    <string>Crea Account</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -94,41 +94,6 @@ font: 20pt &quot;Segoe UI&quot;;</string>
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QLineEdit" name="nome">
-   <property name="geometry">
-    <rect>
-     <x>290</x>
-     <y>200</y>
-     <width>271</width>
-     <height>36</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font-size:20; color:rgb(243, 243, 243)</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="password">
-   <property name="geometry">
-    <rect>
-     <x>290</x>
-     <y>360</y>
-     <width>271</width>
-     <height>36</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font-size:20; color:rgb(243, 243, 243)</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="echoMode">
-    <enum>QLineEdit::Password</enum>
-   </property>
-  </widget>
   <widget class="QPushButton" name="signupbutton">
    <property name="geometry">
     <rect>
@@ -180,38 +145,6 @@ font: 20pt &quot;Segoe UI&quot;;</string>
     <string>Password:</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="cognome">
-   <property name="geometry">
-    <rect>
-     <x>290</x>
-     <y>240</y>
-     <width>271</width>
-     <height>36</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font-size:20; color:rgb(243, 243, 243)</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="cf">
-   <property name="geometry">
-    <rect>
-     <x>290</x>
-     <y>280</y>
-     <width>271</width>
-     <height>36</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font-size:20; color:rgb(243, 243, 243)</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_7">
    <property name="geometry">
     <rect>
@@ -229,35 +162,88 @@ font: 20pt &quot;Segoe UI&quot;;</string>
     <string>Telefono:</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="telefono">
+  <widget class="QLineEdit" name="nome">
    <property name="geometry">
     <rect>
-     <x>290</x>
-     <y>320</y>
-     <width>271</width>
-     <height>36</height>
+     <x>320</x>
+     <y>207</y>
+     <width>250</width>
+     <height>30</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font-size:20; color:rgb(243, 243, 243)</string>
+    <string notr="true">color: rgb(255, 255, 255);
+</string>
    </property>
-   <property name="text">
-    <string/>
+  </widget>
+  <widget class="QLineEdit" name="cognome">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>244</y>
+     <width>250</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="cf">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>283</y>
+     <width>250</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="telefono">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>324</y>
+     <width>250</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="password">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>363</y>
+     <width>250</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
    </property>
   </widget>
   <zorder>label_5</zorder>
   <zorder>label</zorder>
   <zorder>label_3</zorder>
   <zorder>label_4</zorder>
-  <zorder>nome</zorder>
-  <zorder>password</zorder>
   <zorder>signupbutton</zorder>
   <zorder>label_6</zorder>
+  <zorder>label_7</zorder>
+  <zorder>label_2</zorder>
+  <zorder>nome</zorder>
   <zorder>cognome</zorder>
   <zorder>cf</zorder>
-  <zorder>label_7</zorder>
   <zorder>telefono</zorder>
-  <zorder>label_2</zorder>
+  <zorder>password</zorder>
  </widget>
  <resources/>
  <connections/>

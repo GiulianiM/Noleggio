@@ -33,7 +33,6 @@
    <property name="font">
     <font>
      <pointsize>13</pointsize>
-     <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
@@ -61,7 +60,6 @@
    <property name="font">
     <font>
      <pointsize>13</pointsize>
-     <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
@@ -86,7 +84,6 @@
    <property name="font">
     <font>
      <pointsize>13</pointsize>
-     <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
@@ -121,7 +118,7 @@
     <rect>
      <x>150</x>
      <y>140</y>
-     <width>210</width>
+     <width>300</width>
      <height>31</height>
     </rect>
    </property>
@@ -166,7 +163,7 @@
     <rect>
      <x>150</x>
      <y>110</y>
-     <width>210</width>
+     <width>300</width>
      <height>31</height>
     </rect>
    </property>
@@ -190,7 +187,7 @@
     <rect>
      <x>150</x>
      <y>80</y>
-     <width>210</width>
+     <width>300</width>
      <height>31</height>
     </rect>
    </property>
@@ -256,7 +253,7 @@
     <rect>
      <x>150</x>
      <y>50</y>
-     <width>210</width>
+     <width>300</width>
      <height>31</height>
     </rect>
    </property>
@@ -280,7 +277,7 @@
     <rect>
      <x>150</x>
      <y>20</y>
-     <width>210</width>
+     <width>300</width>
      <height>31</height>
     </rect>
    </property>

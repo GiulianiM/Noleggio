@@ -18,6 +18,37 @@ class VistaCorsa(QDialog):
         self.back_button.clicked.connect(self.go_indietro)
         self.bottone_inizia_corsa.setEnabled(False)
         self.bottone_termina_corsa.setEnabled(False)
+        self.listWidget.setStyleSheet("""
+                QListView {
+                    background-color: rgb(127, 127, 127);
+                    color: rgb(255, 255, 255);
+                    }
+                QScrollBar:vertical {              
+                    border: none;
+                    background:white;
+                    width:3px;
+                    margin: 0px 0px 0px 0px;
+                }
+                QScrollBar::handle:vertical {
+                    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                    stop: 0 rgb(38, 157, 206), stop: 0.5 rgb(38, 157, 206), stop:1 rgb(38, 157, 206));
+                    min-height: 0px;
+                }
+                QScrollBar::add-line:vertical {
+                    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                    stop: 0 rgb(38, 157, 206), stop: 0.5 rgb(38, 157, 206),  stop:1 rgb(38, 157, 206));
+                    height: 0px;
+                    subcontrol-position: bottom;
+                    subcontrol-origin: margin;
+                }
+                QScrollBar::sub-line:vertical {
+                    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                    stop: 0  rgb(38, 157, 206), stop: 0.5 rgb(38, 157, 206),  stop:1 rgb(38, 157, 206));
+                    height: 0 px;
+                    subcontrol-position: top;
+                    subcontrol-origin: margin;
+                }
+            """)
         self.popola_lista_mezzi()
         self.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
 
@@ -52,7 +83,7 @@ class VistaCorsa(QDialog):
             self.corsa.inizializza_corsa(self.mezzo)
             self.corsa.avvia_corsa()
             self.popola_lista_mezzi()
-            QMessageBox.information(self, "Attenzione!", "Corsa iniziata")
+            QMessageBox.information(self, "Attenzione!", '<p style=color:white>La corsa è iniziata!</p>')
         else:
             QMessageBox.warning(self, "Attenzione!", "Saldo insufficiente")
 

@@ -18,7 +18,8 @@ class VisualizzaPortafoglio(QDialog):
         value = self.quantita_da_versare.value()
         saldo, message = self.cliente.portafoglio.versa_denaro(value)
         self.saldo_label_to_edit.setText(str(saldo) + "€")
-        QMessageBox.information(self, "Attenzione!", message)
+        message_to_print = '<p style=color:white>{}</p>'.format(message)
+        QMessageBox.information(self, "Attenzione!", message_to_print)
 
     def go_indietro(self):
         self.close()

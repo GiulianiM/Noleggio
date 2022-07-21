@@ -28,17 +28,17 @@ class ModificaProfilo(QDialog):
     def go_conferma_modifiche(self):
         if len(self.old_pw_input.text()) <= 0 or len(self.new_pw_input.text()) <= 0 or len(
                 self.new_pw_input_check.text()) <= 0:
-            QMessageBox.warning(self, "Attenzione!", "Compilare tutti i campi")
+            QMessageBox.warning(self, "Attenzione!", '<p style=color:white>Compilare tutti i campi</p>')
         elif self.old_pw_input.text() != self.cliente.password:
-            QMessageBox.warning(self, "Attenzione!", "Password vecchia errata")
+            QMessageBox.warning(self, "Attenzione!", '<p style=color:white>La vecchia password non corrisponde</p>')
         elif self.new_pw_input.text() != self.new_pw_input_check.text():
-            QMessageBox.warning(self, "Attenzione!", "Le password non corrispondono")
+            QMessageBox.warning(self, "Attenzione!", '<p style=color:white>Le nuove password non corrispondono</p>')
         elif self.new_pw_input.text() == self.old_pw_input.text() or self.new_pw_input_check.text() == self.old_pw_input.text():
-            QMessageBox.warning(self, "Attenzione!", "La nuova password è la vecchia")
+            QMessageBox.warning(self, "Attenzione!", '<p style=color:white>La nuova password è uguale alla vecchia</p>')
         else:
             message = self.cliente.modifica_cliente(nuova_pwd=self.new_pw_input.text(),
                                                     codice_cliente=self.cliente.codice)
-            QMessageBox.information(self, "Attenzione!", message)
+            QMessageBox.information(self, "Attenzione!", '<p style=color:white>{}</p>'.format(message))
             self.close()
 
     def go_indietro(self):

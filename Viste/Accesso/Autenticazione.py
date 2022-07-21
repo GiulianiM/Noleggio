@@ -65,7 +65,14 @@ class Signup(QDialog):
             cliente, message = cliente.crea_cliente(nome=nome, cognome=cognome, telefono=telefono, codicefiscale=cf,
                                                     password=password)
             if cliente is not None:
-                QMessageBox.information(self, "Attenzione!", message + "codice: " + str(cliente.codice) + " password: " + str(cliente.password))
+                message_to_print = '<p style=color:white>{}<br>con codice: "{}" e password: "{}"</p>'.format(message, str(cliente.codice), str(cliente.password))
+                mb = QMessageBox()
+                mb.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
+                mb.setWindowTitle("Account creato")
+                mb.setIcon(QMessageBox.Information)
+                mb.setStyleSheet("background-color: rgb(54, 54, 54); color: white;")
+                mb.setText(message_to_print)
+                mb.exec()
                 self.homepage_cliente = HomepageCliente(cliente)
                 self.homepage_cliente.show()
                 self.close()
