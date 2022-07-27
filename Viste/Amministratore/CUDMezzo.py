@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QDialog
 from PyQt5.uic import loadUi
 
 from Servizio.Mezzo import Mezzo
+from Servizio.Monopattino import Monopattino
 
 
 class CUDMezzo(QDialog):
@@ -64,7 +65,7 @@ class CUDMezzo(QDialog):
         self.codice_mezzo_selezionato = self.listWidget.currentItem()
 
     def go_crea_mezzo(self):
-        mezzo = Mezzo()
+        mezzo = Monopattino()
         mezzo.inserisci_mezzo()
         self.popola_lista_mezzi()
 

@@ -62,17 +62,21 @@ class Cliente:
             return None, "Cliente già presente con lo stesso codice fiscale"
 
     # def modifica_cliente(self, codice, nome, cognome, telefono, codice_fiscale):
-    def modifica_cliente(self, nuova_pwd, codice_cliente):
+    def modifica_cliente(self, nuovo_nome, nuovo_cognome, nuovo_cf, nuovo_telefono, nuova_password, codice_cliente):
         if self.ricerca_cliente_codice(codice_cliente) is not None:
             if os.path.isfile('Dati/Clienti.pickle'):
                 with open('Dati/Clienti.pickle', 'rb') as f:
                     clienti = dict(pickle.load(f))
-                    clienti[codice_cliente].password = nuova_pwd
+                    clienti[codice_cliente].nome = nuovo_nome
+                    clienti[codice_cliente].cognome = nuovo_cognome
+                    clienti[codice_cliente].codicefiscale = nuovo_cf
+                    clienti[codice_cliente].telefono = nuovo_telefono
+                    clienti[codice_cliente].password = nuova_password
                 with open('Dati/Clienti.pickle', 'wb') as f:
                     pickle.dump(clienti, f, pickle.HIGHEST_PROTOCOL)
-                return "Modifica avvenuta con successo"
+                return "Modifiche avvenute con successo"
             else:
-                return "Modifica non avvenuta"
+                return "Modifiche non avvenute"
 
     # elimina un cliente a partire dal codice
     def rimuovi_cliente_codice(self, codice):

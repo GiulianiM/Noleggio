@@ -50,7 +50,7 @@ class Portafoglio:
             return format(self.saldo, '0.2f'), "Importo versato correttamente"
 
     # preleva il denaro dal portafoglio del cliente
-    def preleva_denaro(self, importo):
+    def addebita_denaro(self, importo):
         self.saldo -= importo
 
         if os.path.isfile("Dati/Portafogli.pickle"):
@@ -63,8 +63,6 @@ class Portafoglio:
 
             with open("Dati/Portafogli.pickle", "wb") as f:
                 pickle.dump(portafogli, f, pickle.HIGHEST_PROTOCOL)
-        else:
-            print("File non trovato")
 
     # elimina il portafoglio del cliente
     def rimuovi_portafoglio(self):
@@ -77,8 +75,6 @@ class Portafoglio:
             self.saldo = 0.00
             self.codice = -1
             del self
-        else:
-            print("File non trovato")
 
     # ritorna un dizionario con tutti i portafogli di tutti i clienti
     def get_portafogli(self):
@@ -86,5 +82,3 @@ class Portafoglio:
             with open("Dati/Portafogli.pickle", "rb") as f:
                 portafogli = dict(pickle.load(f))
                 return portafogli or None
-        else:
-            print("File non trovato")

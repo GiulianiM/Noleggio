@@ -57,7 +57,7 @@ class CUDCliente(QDialog):
         clienti = Cliente().get_clienti()
         if clienti is not None:
             self.listWidget.clear()
-            self.listWidget.addItems(cliente.get_cliente_to_string() for cliente in clienti.values())
+            self.listWidget.addItems(cliente.get_cliente() for cliente in clienti.values())
             self.listWidget.clicked.connect(self.seleziona_cliente)
 
     def seleziona_cliente(self):

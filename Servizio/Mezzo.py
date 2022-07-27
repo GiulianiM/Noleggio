@@ -6,7 +6,7 @@ import uuid
 class Mezzo:
 
     def __init__(self):
-        self.codice = str(uuid.uuid4())[:8]
+        self.codice = ""
         self.disponibile = True
         self.MINIMO_MINUTI = 5
 
@@ -15,6 +15,8 @@ class Mezzo:
         if os.path.isfile("Dati/Mezzi.pickle"):
             with open("Dati/Mezzi.pickle", "rb") as f:
                 mezzi = pickle.load(f)
+
+        self.codice = str(uuid.uuid4())[:8]
         mezzi[self.codice] = self
         with open("Dati/Mezzi.pickle", "wb") as f:
             pickle.dump(mezzi, f, pickle.HIGHEST_PROTOCOL)
@@ -25,7 +27,6 @@ class Mezzo:
         with open("Dati/Mezzi.pickle", "wb") as f:
             pickle.dump(mezzi, f, pickle.HIGHEST_PROTOCOL)
 
-
     def ricerca_mezzo_codice(self, codice_mezzo):
         mezzi = self.get_mezzi()
         for mezzo in mezzi.values():
@@ -34,11 +35,13 @@ class Mezzo:
 
     def get_mezzi_disponibili(self):
         mezzi = self.get_mezzi()
-        mezzi_disponibili = []
-        for mezzo in mezzi.values():
-            if mezzo.disponibile:
-                mezzi_disponibili.append(mezzo)
-        return mezzi_disponibili
+        if mezzi is not None:
+            mezzi_disponibili = []
+            for mezzo in mezzi.values():
+                if mezzo.disponibile:
+                    mezzi_disponibili.append(mezzo)
+            return mezzi_disponibili
+        return None
 
     # ritorna tutti i mezzi
     def get_mezzi(self):
@@ -58,8 +61,6 @@ class Mezzo:
             with open("Dati/Mezzi.pickle", "wb") as f:
                 pickle.dump(mezzi, f, pickle.HIGHEST_PROTOCOL)
             del self
-        else:
-            print('File non trovato')
 
     def get_mezzo_to_string(self):
         if self.disponibile:

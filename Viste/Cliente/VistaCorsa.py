@@ -55,9 +55,10 @@ class VistaCorsa(QDialog):
     # mostra una lista di mezzi disponibili (i loro codici)
     def popola_lista_mezzi(self):
         mezzi = Mezzo().get_mezzi_disponibili()
-        self.listWidget.clear()
-        self.listWidget.addItems([mezzo.codice for mezzo in mezzi])
-        self.listWidget.clicked.connect(self.seleziona_mezzo)
+        if mezzi is not None:
+            self.listWidget.clear()
+            self.listWidget.addItems([mezzo.codice for mezzo in mezzi])
+            self.listWidget.clicked.connect(self.seleziona_mezzo)
 
     # rilevo il mezzo selezionato dalla lista
     def seleziona_mezzo(self):
@@ -71,21 +72,20 @@ class VistaCorsa(QDialog):
     # se il saldo è sufficiente:
     #   - disabilita il bottone di inizio corsa
     #   - abilita il bottone di fine corsa
-    #   - prendo il mezzo selezionato
     #   - avvio la corsa
     #   - aggiorno la lista dei mezzi disponibili
     def go_avvia_corsa(self):
-        if float(self.cliente.portafoglio.get_saldo()) >= (Monopattino().costo_minuto * Mezzo().MINIMO_MINUTI):
-            self.bottone_inizia_corsa.setEnabled(False)
-            self.bottone_termina_corsa.setEnabled(True)
-            self.mezzo = Mezzo().ricerca_mezzo_codice(self.codice_mezzo_selezionato.text())
-            self.corsa = Corsa()
-            self.corsa.inizializza_corsa(self.mezzo)
-            self.corsa.avvia_corsa()
-            self.popola_lista_mezzi()
-            QMessageBox.information(self, "Attenzione!", '<p style=color:white>La corsa è iniziata!</p>')
-        else:
-            QMessageBox.warning(self, "Attenzione!", "Saldo insufficiente")
+        mezzo_selezionato = Mezzo().ricerca_mezzo_codice(self.codice_mezzo_selezionato.text())
+        if isinstance(mezzo_selezionato, Monopattino):
+            if float(self.cliente.portafoglio.get_saldo()) >= (mezzo_selezionato.costo_minuto * Mezzo().MINIMO_MINUTI):
+                self.bottone_inizia_corsa.setEnabled(False)
+                self.bottone_termina_corsa.setEnabled(True)
+                self.corsa = Corsa(self.cliente)
+                self.corsa.avvia_corsa(self.codice_mezzo_selezionato.text())
+                self.popola_lista_mezzi()
+                QMessageBox.information(self, "Attenzione!", '<p style=color:white>La corsa è iniziata!</p>')
+            else:
+                QMessageBox.warning(self, "Attenzione!", "<p style=color:white>Saldo insufficiente")
 
     # questo metodo può essere chiamato solo se c'è una corsa in corso
     # in quel caso:
@@ -95,7 +95,7 @@ class VistaCorsa(QDialog):
     #  - aggiorno la lista dei mezzi disponibili
     def go_termina_corsa(self):
         self.bottone_termina_corsa.setEnabled(False)
-        message = self.corsa.termina_corsa(self.cliente).split("\n")
+        message = self.corsa.termina_corsa().split("\n")
         message_to_print = '<p style= color:white>' + message[0] + '</p>' + '<p style= color:white>' + message[1] + \
                            '</p>' + '<p style= color:white>' + message[2] + '</p>' + \
                            '<p style= color:white>' + message[3] + '</p>' + '<p style= color:white>' + message[4]

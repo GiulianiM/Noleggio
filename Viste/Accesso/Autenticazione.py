@@ -87,20 +87,19 @@ class Signup(QDialog):
 
     def check_campi(self):
         # il nome deve avere minimo 3 caratteri
-        if len(self.nome.text()) > 2:
-            # il cognome deve avere minimo 3 caratteri
-            if len(self.cognome.text()) > 2:
-                # il codice fiscale deve essere esattamente di 16 caratteri
-                if len(self.cf.text()) == 16 and self.cf.text().isalnum():
-                    # il numero di telefono puo avere solo 10 cifre
-                    if len(self.telefono.text()) == 10 and str(self.telefono.text()).isnumeric():
-                        return True
-                    else:
-                        QMessageBox.warning(self, "Attenzione!", "Il numero di telefono puo contenere solo 10 cifre")
-                else:
-                    QMessageBox.warning(self, "Attenzione!", "Il codice fiscale puo contenere solo 16 caratteri")
-            else:
-                QMessageBox.warning(self, "Attenzione!", "Il cognome deve avere almeno 3 caratteri")
-        else:
+        if len(self.nome.text()) < 3:
             QMessageBox.warning(self, "Attenzione!", "Il nome deve avere almeno 3 caratteri")
-        return False
+            # il cognome deve avere minimo 3 caratteri
+        elif len(self.cognome.text()) < 3:
+            QMessageBox.warning(self, "Attenzione!", "Il cognome deve avere almeno 3 caratteri")
+            # il codice fiscale deve essere esattamente di 16 caratteri
+        elif len(self.cf.text()) != 16 or not self.cf.text().isalnum():
+            QMessageBox.warning(self, "Attenzione!", "Il codice fiscale puo contenere solo 16 caratteri")
+            # il numero di telefono puo avere solo 10 cifre
+        elif len(self.telefono.text()) != 10 or not str(self.telefono.text()).isnumeric():
+            QMessageBox.warning(self, "Attenzione!", "Il numero di telefono puo contenere solo 10 cifre")
+            # la password deve avere minimo 4 caratteri
+        elif len(self.password.text()) < 4:
+            QMessageBox.warning(self, "Attenzione!", "La password deve avere almeno 4 caratteri")
+        else:
+            return True
