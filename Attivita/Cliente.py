@@ -1,111 +1,101 @@
 import os
 import pickle
 import uuid
-from builtins import str
 
-from Attivita.Portafoglio import Portafoglio
+from Utils.Const.PathFiles import PATH_CLIENTI, PATH_CURRENT_USER
 
 
 class Cliente:
 
     def __init__(self):
-        self.portafoglio = None
-        self.codice = ""
-        self.codicefiscale = ""
+        self.id = ""
+        self.cf = ""
         self.nome = ""
         self.cognome = ""
         self.telefono = ""
         self.password = ""
 
-    # ritorna un cliente a partire dal codice
-    def ricerca_cliente_codice(self, codice):
-        if os.path.isfile('Dati/Clienti.pickle'):
-            with open('Dati/Clienti.pickle', 'rb') as f:
+    # 1. istanzia un nuovo utente
+    # 2. salva l'istanza su file
+    # return: self (questo cliente)
+    def crea(self, nome, cognome, telefono, cf, password):
+        self.nome = nome
+        self.cognome = cognome
+        self.telefono = telefono
+        self.cf = cf
+        self.password = password
+        self.id = str(uuid.uuid4())[:8]  # genero un id_cliente da 8 caratteri alfanumerici
+
+        clienti = {}
+        if os.path.isfile(PATH_CLIENTI):
+            with open(PATH_CLIENTI, "rb") as f:
                 clienti = dict(pickle.load(f))
-                for cliente in clienti.values():
-                    if cliente.codice == codice:
-                        return cliente
-                return None
+        clienti[self.id] = self
+        with open(PATH_CLIENTI, "wb") as f:
+            pickle.dump(clienti, f, pickle.HIGHEST_PROTOCOL)
 
-    # ritorna un cliente a partire dal codice fiscale
-    def ricerca_cliente_codicefiscale(self, codicefiscale):
-        if os.path.isfile('Dati/Clienti.pickle'):
-            with open('Dati/Clienti.pickle', 'rb') as f:
+        # salvo su file i dati l'utente loggato
+        with open(PATH_CURRENT_USER, "wb") as f:
+            pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
+        return self
+
+    # 1. modifica il profilo con i valori passati come parametri
+    # 2. salva su file
+    def modifica(self, nuovo_nome, nuovo_cognome, nuovo_cf, nuovo_telefono, nuova_password):
+        self.nome = nuovo_nome
+        self.cognome = nuovo_cognome
+        self.cf = nuovo_cf
+        self.telefono = nuovo_telefono
+        self.password = nuova_password
+
+        if os.path.isfile(PATH_CLIENTI):
+            with open(PATH_CLIENTI, 'rb') as f:
                 clienti = dict(pickle.load(f))
-                for cliente in clienti.values():
-                    if cliente.codicefiscale == codicefiscale:
-                        return cliente
-                return None
+                clienti[self.id].nome = nuovo_nome
+                clienti[self.id].cognome = nuovo_cognome
+                clienti[self.id].cf = nuovo_cf
+                clienti[self.id].telefono = nuovo_telefono
+                clienti[self.id].password = nuova_password
+        with open(PATH_CLIENTI, 'wb') as f:
+            pickle.dump(clienti, f, pickle.HIGHEST_PROTOCOL)
 
-    # crea un cliente, lo inserisce nel dizionario e lo salva su file
-    def crea_cliente(self, nome, cognome, telefono, codicefiscale, password):
-        # ricerco omonimi con codice fiscale per evitare duplicazioni
-        if self.ricerca_cliente_codicefiscale(codicefiscale) is None:
-            self.nome = nome
-            self.cognome = cognome
-            self.telefono = telefono
-            self.codicefiscale = codicefiscale
-            self.codice = str(uuid.uuid4())[:8]
-            self.portafoglio = Portafoglio()
-            self.portafoglio.crea_portafoglio(self.codice)
-            self.password = password
+        if os.path.isfile(PATH_CURRENT_USER):
+            with open(PATH_CURRENT_USER, "rb") as f:
+                portafoglio_corrente = pickle.load(f)
+                portafoglio_corrente.nome = nuovo_nome
+                portafoglio_corrente.cognome = nuovo_cognome
+                portafoglio_corrente.cf = nuovo_cf
+                portafoglio_corrente.telefono = nuovo_telefono
+                portafoglio_corrente.password = nuova_password
+        with open(PATH_CURRENT_USER, "wb") as f:
+            pickle.dump(portafoglio_corrente, f, pickle.HIGHEST_PROTOCOL)
 
-            clienti = {}
-            if os.path.isfile("Dati/Clienti.pickle"):
-                with open("Dati/Clienti.pickle", "rb") as f:
-                    clienti = dict(pickle.load(f))
-            clienti[self.codice] = self
-            with open("Dati/Clienti.pickle", "wb") as f:
+    # 1. rimuove l'istanza del cliente a partire dal id_cliente
+    # 2. salva su file
+    # return: Boolean
+    def rimuovi(self):
+        if os.path.isfile(PATH_CLIENTI):
+            with open(PATH_CLIENTI, 'rb') as f:
+                clienti = dict(pickle.load(f))
+                del clienti[self.id]
+            with open(PATH_CLIENTI, 'wb') as f:
                 pickle.dump(clienti, f, pickle.HIGHEST_PROTOCOL)
-            return self, "Registrazione avvenuta con successo"
-        else:
-            return None, "Cliente già presente con lo stesso codice fiscale"
+            del self
 
-    # def modifica_cliente(self, codice, nome, cognome, telefono, codice_fiscale):
-    def modifica_cliente(self, nuovo_nome, nuovo_cognome, nuovo_cf, nuovo_telefono, nuova_password, codice_cliente):
-        if self.ricerca_cliente_codice(codice_cliente) is not None:
-            if os.path.isfile('Dati/Clienti.pickle'):
-                with open('Dati/Clienti.pickle', 'rb') as f:
-                    clienti = dict(pickle.load(f))
-                    clienti[codice_cliente].nome = nuovo_nome
-                    clienti[codice_cliente].cognome = nuovo_cognome
-                    clienti[codice_cliente].codicefiscale = nuovo_cf
-                    clienti[codice_cliente].telefono = nuovo_telefono
-                    clienti[codice_cliente].password = nuova_password
-                with open('Dati/Clienti.pickle', 'wb') as f:
-                    pickle.dump(clienti, f, pickle.HIGHEST_PROTOCOL)
-                return "Modifiche avvenute con successo"
-            else:
-                return "Modifiche non avvenute"
-
-    # elimina un cliente a partire dal codice
-    def rimuovi_cliente_codice(self, codice):
-        if self.ricerca_cliente_codice(codice) is not None:
-            if os.path.isfile('Dati/Clienti.pickle'):
-                with open('Dati/Clienti.pickle', 'rb') as f:
-                    clienti = dict(pickle.load(f))
-                    del clienti[codice]
-                with open('Dati/Clienti.pickle', 'wb') as f:
-                    pickle.dump(clienti, f, pickle.HIGHEST_PROTOCOL)
-                if self.portafoglio is not None:
-                    self.portafoglio.rimuovi_portafoglio()
-                del self
-                return "Eliminazione avvenuta con successo"
-            else:
-                return "Eliminazione non avvenuta"
-
-    # ritorna un dizionario con tutti i clienti
+    # preleva tutti i clienti registrati al sistema
+    # return: Dict of Cliente
     def get_clienti(self):
-        if os.path.isfile('Dati/Clienti.pickle'):
-            with open('Dati/Clienti.pickle', 'rb') as f:
+        if os.path.isfile(PATH_CLIENTI):
+            with open(PATH_CLIENTI, 'rb') as f:
                 clienti = dict(pickle.load(f))
                 return clienti or None
 
-    def get_cliente(self):
-        return "Codice: " + self.codice + "\n" + \
+    # to_string()
+    # return: String
+    def __str__(self):
+        return "Codice: " + self.id + "\n" + \
                "Nome: " + self.nome + "\n" + \
                "Cognome: " + self.cognome + "\n" + \
                "Telefono: " + self.telefono + "\n" + \
-               "Codice fiscale: " + self.codicefiscale + "\n" + \
-               "Password: " + self.password + "\n" + \
-               "Saldo: " + str(self.portafoglio.get_saldo()) + "\n"
+               "Codice fiscale: " + self.cf + "\n" + \
+               "Password: " + self.password + "\n"

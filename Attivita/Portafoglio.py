@@ -1,84 +1,107 @@
 import os
 import pickle
 
+from Utils.Const.PathFiles import PATH_PORTAFOGLI, PATH_CURRENT_WALLET
+
 
 class Portafoglio:
     def __init__(self):
         self.saldo = 0.00
-        self.codice = ""
+        self.id = ""
 
-    # crea un nuovo portafoglio
-    def crea_portafoglio(self, codice_cliente):
-        # come codice univoco del portafoglio associo il codice univoco del cliente
-        self.codice = codice_cliente
+    # 1. istanzia un nuovo portafoglio
+    # 2. salva su file
+    # return: self (questo portafoglio)
+    def crea(self, codice_cliente):
+        # come id_cliente univoco del portafoglio associo il id_cliente univoco del cliente
+        self.id = codice_cliente
 
         portafogli = {}
-        if os.path.isfile("Dati/Portafogli.pickle"):
-            with open("Dati/Portafogli.pickle", "rb") as f:
+        if os.path.isfile(PATH_PORTAFOGLI):
+            with open(PATH_PORTAFOGLI, "rb") as f:
                 portafogli = dict(pickle.load(f))
-        portafogli[self.codice] = self
-        with open("Dati/Portafogli.pickle", "wb") as f:
+        portafogli[self.id] = self
+        with open(PATH_PORTAFOGLI, "wb") as f:
             pickle.dump(portafogli, f, pickle.HIGHEST_PROTOCOL)
 
-    # ritorna il saldo del portafoglio del cliente
+        with open(PATH_CURRENT_WALLET, "wb") as f:
+            pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
+        return self
+
+    # ritorna il saldo attuale
+    # return: String
     def get_saldo(self):
-        if os.path.isfile("Dati/Portafogli.pickle"):
-            with open("Dati/Portafogli.pickle", "rb") as f:
-                portafogli = dict(pickle.load(f))
+        return format(self.saldo, '0.2f')
 
-            for k, v in portafogli.items():
-                if k == self.codice:
-                    self.saldo = v.saldo
-                    return format(v.saldo, '0.2f')
-        else:
-            return None
-
-    # versa il denaro nel portafoglio del cliente
-    def versa_denaro(self, importo):
+    # 1. aggiorna il saldo addizionando l'importo
+    # 2. salva su file
+    # return: String
+    def versa(self, importo):
         self.saldo += importo
 
-        if os.path.isfile("Dati/Portafogli.pickle"):
-            with open("Dati/Portafogli.pickle", "rb") as f:
+        if os.path.isfile(PATH_PORTAFOGLI):
+            with open(PATH_PORTAFOGLI, "rb") as f:
                 portafogli = dict(pickle.load(f))
-
-            for k, v in portafogli.items():
-                if k == self.codice:
-                    v.saldo += importo
-
-            with open("Dati/Portafogli.pickle", "wb") as f:
+                for k, v in portafogli.items():
+                    if k == self.id:
+                        v.saldo += importo
+            with open(PATH_PORTAFOGLI, "wb") as f:
                 pickle.dump(portafogli, f, pickle.HIGHEST_PROTOCOL)
-            return format(self.saldo, '0.2f'), "Importo versato correttamente"
 
-    # preleva il denaro dal portafoglio del cliente
-    def addebita_denaro(self, importo):
+        if os.path.isfile(PATH_CURRENT_WALLET):
+            with open(PATH_CURRENT_WALLET, "rb") as f:
+                portafoglio_corrente = pickle.load(f)
+                portafoglio_corrente.saldo = self.saldo
+            with open(PATH_CURRENT_WALLET, "wb") as f:
+                pickle.dump(portafoglio_corrente, f, pickle.HIGHEST_PROTOCOL)
+
+        return self.get_saldo()
+
+    # 1. aggiorna il saldo sottraendo l'importo
+    # 2. salva su file
+    # return: String
+    def preleva(self, importo):
         self.saldo -= importo
 
-        if os.path.isfile("Dati/Portafogli.pickle"):
-            with open("Dati/Portafogli.pickle", "rb") as f:
+        if os.path.isfile(PATH_PORTAFOGLI):
+            with open(PATH_PORTAFOGLI, "rb") as f:
                 portafogli = dict(pickle.load(f))
-
-            for k, v in portafogli.items():
-                if k == self.codice:
-                    v.saldo -= importo
-
-            with open("Dati/Portafogli.pickle", "wb") as f:
+                for k, v in portafogli.items():
+                    if k == self.id:
+                        v.saldo -= importo
+            with open(PATH_PORTAFOGLI, "wb") as f:
                 pickle.dump(portafogli, f, pickle.HIGHEST_PROTOCOL)
 
-    # elimina il portafoglio del cliente
-    def rimuovi_portafoglio(self):
-        if os.path.isfile('Dati/Portafogli.pickle'):
-            with open('Dati/Portafogli.pickle', 'rb') as f:
+        if os.path.isfile(PATH_CURRENT_WALLET):
+            with open(PATH_CURRENT_WALLET, "rb") as f:
+                portafoglio_corrente = pickle.load(f)
+                portafoglio_corrente.saldo -= importo
+            with open(PATH_CURRENT_WALLET, "wb") as f:
+                pickle.dump(portafoglio_corrente, f, pickle.HIGHEST_PROTOCOL)
+
+        return self.get_saldo()
+
+    # 1. elimina l'istanza
+    # 2. salva su file
+    def rimuovi(self):
+        if os.path.isfile(PATH_PORTAFOGLI):
+            with open(PATH_PORTAFOGLI, 'rb') as f:
                 portafogli = dict(pickle.load(f))
-                del portafogli[self.codice]
-            with open('Dati/Portafogli.pickle', 'wb') as f:
+                del portafogli[self.id]
+            with open(PATH_PORTAFOGLI, 'wb') as f:
                 pickle.dump(portafogli, f, pickle.HIGHEST_PROTOCOL)
-            self.saldo = 0.00
-            self.codice = -1
             del self
 
     # ritorna un dizionario con tutti i portafogli di tutti i clienti
+    # return: Dict of Portafogli
     def get_portafogli(self):
-        if os.path.isfile("Dati/Portafogli.pickle"):
-            with open("Dati/Portafogli.pickle", "rb") as f:
+        if os.path.isfile(PATH_PORTAFOGLI):
+            with open(PATH_PORTAFOGLI, "rb") as f:
                 portafogli = dict(pickle.load(f))
                 return portafogli or None
+
+    # to_string
+    # return: String
+    def __str__(self) -> str:
+        return "Id: " + self.id + "\n" + \
+               "Saldo: " + self.get_saldo()

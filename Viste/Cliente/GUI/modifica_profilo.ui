@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>459</width>
+    <width>390</width>
     <height>350</height>
    </rect>
   </property>
@@ -60,7 +60,7 @@
             <string notr="true">color:rgb(255, 255, 255)</string>
            </property>
            <property name="text">
-            <string>Nuovo Cognome:</string>
+            <string>Nuovo cognome:</string>
            </property>
           </widget>
          </item>
@@ -75,7 +75,7 @@
             <string notr="true">color:rgb(255, 255, 255)</string>
            </property>
            <property name="text">
-            <string>Nuovo Telefono:</string>
+            <string>Nuovo telefono:</string>
            </property>
           </widget>
          </item>
@@ -90,7 +90,7 @@
             <string notr="true">color:rgb(255, 255, 255)</string>
            </property>
            <property name="text">
-            <string>Nuovo C. Fiscale:</string>
+            <string>Nuovo CF:</string>
            </property>
           </widget>
          </item>

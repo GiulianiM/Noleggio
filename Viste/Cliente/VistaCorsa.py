@@ -2,20 +2,21 @@ from PyQt5 import QtCore
 from PyQt5.QtWidgets import QDialog, QMessageBox
 from PyQt5.uic import loadUi
 
-from Attivita.Corsa import Corsa
-from Servizio.Mezzo import Mezzo
-from Servizio.Monopattino import Monopattino
+from Controller.GestoreCorse import GestoreCorse
+from Utils.Const.PathViste import PATH_VISTA_CORSE
 
 
 class VistaCorsa(QDialog):
-    def __init__(self, cliente):
+    def __init__(self):
         super(VistaCorsa, self).__init__()
-        loadUi("viste/cliente/gui/corsa.ui", self)
-        self.cliente = cliente
+        loadUi(PATH_VISTA_CORSE, self)
+        self.gestore_corse = GestoreCorse()
+        self.setup_ui()
 
+    def setup_ui(self):
         self.bottone_inizia_corsa.clicked.connect(self.go_avvia_corsa)
         self.bottone_termina_corsa.clicked.connect(self.go_termina_corsa)
-        self.back_button.clicked.connect(self.go_indietro)
+        self.back_button.clicked.connect(self.go_back)
         self.bottone_inizia_corsa.setEnabled(False)
         self.bottone_termina_corsa.setEnabled(False)
         self.listWidget.setStyleSheet("""
@@ -52,55 +53,41 @@ class VistaCorsa(QDialog):
         self.popola_lista_mezzi()
         self.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
 
-    # mostra una lista di mezzi disponibili (i loro codici)
+    # mostra una lista di monopattini disponibili (i loro codici)
     def popola_lista_mezzi(self):
-        mezzi = Mezzo().get_mezzi_disponibili()
-        if mezzi is not None:
+        mezzi = self.gestore_corse.gestore_mezzi.get_mezzi_disponibili()
+        if len(mezzi) > 0:
             self.listWidget.clear()
-            self.listWidget.addItems([mezzo.codice for mezzo in mezzi])
+            self.listWidget.addItems([mezzo.id for mezzo in mezzi])
             self.listWidget.clicked.connect(self.seleziona_mezzo)
 
-    # rilevo il mezzo selezionato dalla lista
+    # rilevo il monopattino selezionato dalla lista
     def seleziona_mezzo(self):
-        self.codice_mezzo_selezionato = self.listWidget.currentItem()
+        self.id_monopattino_selezionato = self.listWidget.currentItem()
         if self.bottone_termina_corsa.isEnabled():
             self.bottone_inizia_corsa.setEnabled(False)
         else:
             self.bottone_inizia_corsa.setEnabled(True)
 
-    # controllo che il saldo sia sufficiente (minimo 1€ che garantisce almeno 5 minuti di viaggio)
-    # se il saldo è sufficiente:
-    #   - disabilita il bottone di inizio corsa
-    #   - abilita il bottone di fine corsa
-    #   - avvio la corsa
-    #   - aggiorno la lista dei mezzi disponibili
     def go_avvia_corsa(self):
-        mezzo_selezionato = Mezzo().ricerca_mezzo_codice(self.codice_mezzo_selezionato.text())
-        if isinstance(mezzo_selezionato, Monopattino):
-            if float(self.cliente.portafoglio.get_saldo()) >= (mezzo_selezionato.costo_minuto * Mezzo().MINIMO_MINUTI):
-                self.bottone_inizia_corsa.setEnabled(False)
-                self.bottone_termina_corsa.setEnabled(True)
-                self.corsa = Corsa(self.cliente)
-                self.corsa.avvia_corsa(self.codice_mezzo_selezionato.text())
-                self.popola_lista_mezzi()
-                QMessageBox.information(self, "Attenzione!", '<p style=color:white>La corsa è iniziata!</p>')
-            else:
-                QMessageBox.warning(self, "Attenzione!", "<p style=color:white>Saldo insufficiente")
+        is_avviata = self.gestore_corse.avvia_corsa(self.id_monopattino_selezionato.text())
+        if is_avviata:
+            self.bottone_inizia_corsa.setEnabled(False)
+            self.bottone_termina_corsa.setEnabled(True)
+            QMessageBox.information(self, "Attenzione!", "Corsa Avviata!")
+            self.popola_lista_mezzi()
+        else:
+            QMessageBox.warning(self, "Attenzione!", "<p style=color:white> Saldo insufficiente!")
 
-    # questo metodo può essere chiamato solo se c'è una corsa in corso
-    # in quel caso:
-    #  - disabilita il bottone di fine corsa
-    #  - abilita il bottone di inizio corsa
-    #  - termino la corsa
-    #  - aggiorno la lista dei mezzi disponibili
     def go_termina_corsa(self):
-        self.bottone_termina_corsa.setEnabled(False)
-        message = self.corsa.termina_corsa().split("\n")
-        message_to_print = '<p style= color:white>' + message[0] + '</p>' + '<p style= color:white>' + message[1] + \
-                           '</p>' + '<p style= color:white>' + message[2] + '</p>' + \
-                           '<p style= color:white>' + message[3] + '</p>' + '<p style= color:white>' + message[4]
-        QMessageBox.information(self, "Ricevuta", message_to_print)
-        self.popola_lista_mezzi()
+        is_terminata, ricevuta = self.gestore_corse.termina_corsa()
+        if is_terminata:
+            self.bottone_inizia_corsa.setEnabled(True)
+            self.bottone_termina_corsa.setEnabled(False)
+            self.popola_lista_mezzi()
 
-    def go_indietro(self):
+            QMessageBox.information(self, "Ricevuta", "<p style=color:white> {}".format(ricevuta))
+
+    def go_back(self):
+        self.go_termina_corsa()
         self.close()

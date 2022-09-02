@@ -1,0 +1,13 @@
+PATH_VISTA_HOME = "viste/cliente/gui/homepage_utente.ui"
+PATH_VISTA_LOGIN = "Viste/Accesso/GUI/Login.ui"
+PATH_VISTA_SIGNUP = "Viste/Accesso/GUI/createacc.ui"
+PATH_VISTA_PROFILO = "viste/cliente/gui/profilo.ui"
+PATH_VISTA_MODIFICA_PROFILO = "viste/cliente/gui/modifica_profilo.ui"
+PATH_VISTA_PORTAFOGLIO = "viste/cliente/gui/portafoglio.ui"
+PATH_VISTA_RICEVUTE = "viste/cliente/gui/visualizza_ricevute.ui"
+PATH_VISTA_CORSE = "Viste/Cliente/GUI/corsa.ui"
+PATH_VISTA_PANNELLO_DI_CONTROLLO = "Viste/Amministratore/GUI/homepage_amministratore.ui"
+PATH_VISTA_CLIENTI = "Viste/Amministratore/GUI/cud_cliente.ui"
+PATH_VISTA_MEZZI = "Viste/Amministratore/GUI/cud_mezzo.ui"
+PATH_VISTA_MODIFICA_MEZZO = "Viste/Amministratore/GUI/modifica_mezzo.ui"
+PATH_VISTA_STATISTICHE = 'Viste/Amministratore/GUI/statistiche.ui'

@@ -1,0 +1,7 @@
+PATH_CLIENTI = 'Dati/Clienti.pickle'
+PATH_PORTAFOGLI = 'Dati/Portafogli.pickle'
+PATH_RICEVUTE = 'Dati/Ricevute.pickle'
+PATH_MONOPATTINI = 'Dati/Monopattini.pickle'
+PATH_BACKUP = 'Dati/Backup.pickle'
+PATH_CURRENT_USER = 'Dati/CurrentUser.pickle'
+PATH_CURRENT_WALLET = 'Dati/CurrentWallet.pickle'

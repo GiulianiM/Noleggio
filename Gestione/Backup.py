@@ -1,35 +1,39 @@
 import pickle
 import time
 
-from Attivita.Cliente import Cliente
-from Attivita.Portafoglio import Portafoglio
-from Attivita.Ricevuta import Ricevuta
-from Servizio.Mezzo import Mezzo
 import schedule
+
+from Controller.GestoreClienti import GestoreClienti
+from Controller.GestoreMezzi import GestoreMezzi
+from Controller.GestoreRicevute import GestoreRicevute
+from Utils.Const.PathFiles import PATH_BACKUP
 
 
 class Backup:
 
     def __init__(self):
+        self.gestore_clienti = GestoreClienti()
+        self.gestore_ricevute = GestoreRicevute()
+        self.gestore_mezzi = GestoreMezzi()
         self.portafogli = {}
         self.ricevute = {}
         self.clienti = {}
-        self.mezzi = {}
+        self.monopattini = {}
 
     def esegui_backup(self):
-        self.clienti = Cliente().get_clienti()
-        self.ricevute = Ricevuta().get_ricevute()
-        self.portafogli = Portafoglio().get_portafogli()
-        self.mezzi = Mezzo().get_mezzi()
+        self.clienti = self.gestore_clienti.cliente_corrente.get_clienti()
+        self.ricevute = self.gestore_ricevute.get_ricevute()
+        self.portafogli = self.gestore_clienti.portafoglio_corrente.get_portafogli()
+        self.monopattini = self.gestore_mezzi.get_all_mezzi()
 
-        with open("Dati/Backup.pickle", "wb") as f:
+        with open(PATH_BACKUP, "wb") as f:
             for cliente in self.clienti:
                 pickle.dump(cliente, f)
             for ricevuta in self.ricevute:
                 pickle.dump(ricevuta, f)
             for portafoglio in self.portafogli:
                 pickle.dump(portafoglio, f)
-            for mezzo in self.mezzi:
+            for mezzo in self.monopattini:
                 pickle.dump(mezzo, f)
 
     def backup_daily(self):

@@ -1,0 +1,94 @@
+from PyQt5 import QtWidgets, QtCore
+from PyQt5.QtWidgets import QDialog, QMessageBox
+from PyQt5.uic import loadUi
+from Controller.GestoreClienti import GestoreClienti
+
+from Utils.Const.PathViste import PATH_VISTA_CLIENTI
+from Viste.Accesso.Signup import Signup
+from Viste.Cliente.VistaModificaProfilo import VistaModificaProfilo
+
+
+class VistaClienti(QDialog):
+    def __init__(self):
+        super().__init__()
+        loadUi(PATH_VISTA_CLIENTI, self)
+        self.gestore_clienti = GestoreClienti()
+        self.id_cliente_selezionato = None
+        self.setup_ui()
+
+    def setup_ui(self):
+        self.bottone_crea_cliente.clicked.connect(self.go_crea_cliente)
+        self.bottone_elimina_cliente.clicked.connect(self.go_elimina_cliente)
+        self.bottone_modifica_cliente.clicked.connect(self.go_modifica_cliente)
+        self.back_button.clicked.connect(self.go_back)
+        self.listWidget.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
+        self.listWidget.setStyleSheet("""
+        QListView {
+            background-color: rgb(127, 127, 127);
+            color: rgb(255, 255, 255);
+            }
+        QScrollBar:vertical {              
+            border: none;
+            background:white;
+            width:3px;
+            margin: 0px 0px 0px 0px;
+        }
+        QScrollBar::handle:vertical {
+            background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+            stop: 0 rgb(38, 157, 206), stop: 0.5 rgb(38, 157, 206), stop:1 rgb(38, 157, 206));
+            min-height: 0px;
+        }
+        QScrollBar::add-line:vertical {
+            background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+            stop: 0 rgb(38, 157, 206), stop: 0.5 rgb(38, 157, 206),  stop:1 rgb(38, 157, 206));
+            height: 0px;
+            subcontrol-position: bottom;
+            subcontrol-origin: margin;
+        }
+        QScrollBar::sub-line:vertical {
+            background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+            stop: 0  rgb(38, 157, 206), stop: 0.5 rgb(38, 157, 206),  stop:1 rgb(38, 157, 206));
+            height: 0 px;
+            subcontrol-position: top;
+            subcontrol-origin: margin;
+        }
+    """)
+        self.popola_lista_clienti()
+        self.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
+
+    def popola_lista_clienti(self):
+        clienti = self.gestore_clienti.visualizza_clienti()
+        if clienti is not None:
+            self.listWidget.clear()
+            self.listWidget.addItems(cliente.__str__() for cliente in clienti.values())
+            self.listWidget.clicked.connect(self.seleziona_cliente)
+
+    def seleziona_cliente(self):
+        self.id_cliente_selezionato = self.listWidget.currentItem()
+        print(self.id_cliente_selezionato)
+
+    def go_crea_cliente(self):
+        self.crea_account = Signup(False)
+        self.crea_account.closed.connect(self.popola_lista_clienti)
+        self.crea_account.show()
+
+    def go_elimina_cliente(self):
+        if self.id_cliente_selezionato is not None:
+            ret = self.gestore_clienti.rimuovi_cliente(self.id_cliente_selezionato.text().split("\n")[0].split(" ")[1])
+            if ret:
+                QMessageBox.information(self, "Rimozione cliente", "Rimozione eseguita con successo!")
+                self.popola_lista_clienti()
+            else:
+                QMessageBox.information(self, "Rimozione cliente", "Errore rimozione! Cliente non trovato")
+            self.id_cliente_selezionato = None
+
+    def go_modifica_cliente(self):
+        if self.id_cliente_selezionato is not None:
+            self.modifica_profilo = VistaModificaProfilo(
+                self.id_cliente_selezionato.text().split("\n")[0].split(" ")[1])
+            self.modifica_profilo.closed.connect(self.popola_lista_clienti)
+            self.modifica_profilo.show()
+            self.id_cliente_selezionato = None
+
+    def go_back(self):
+        self.close()

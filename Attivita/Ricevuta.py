@@ -1,80 +1,56 @@
-import datetime
 import os
 import pickle
 import uuid
 
 from Servizio.Monopattino import Monopattino
+from Utils.Const.PathFiles import PATH_RICEVUTE
 
 
 class Ricevuta:
 
     def __init__(self):
-        self.codice = ""
-        self.cliente = ""
-        self.mezzo = ""
-        self.corsa = ""
-        self.inizio = datetime.datetime(year=1970, month=1, day=1)
-        self.fine = datetime.datetime(year=1970, month=1, day=1)
-        self.tempo_utilizzo = 0.0
+        self.id = ""
+        self.id_monopattino = ""
         self.costo_totale = 0.0
+        self.tempo_totale = 0.0
+        self.saldo_portafoglio = ""
+        self.id_cliente = ""
 
-    # crea una nuova ricevuta
-    def stila_ricevuta(self, mezzo, corsa, cliente, inizio, fine):
-        self.codice = str(uuid.uuid4())[:8]
-        self.cliente = cliente
-        self.mezzo = mezzo
-        self.corsa = corsa
-        self.inizio = inizio
-        self.fine = fine
-
-        self.tempo_utilizzo = self.get_tempo_utilizzo()
-        self.costo_totale = self.get_costo_totale()
+    # 1. crea una nuova ricevuta
+    # 2. salva su file
+    # return: self (questa ricevuta)
+    def crea(self, id_monopattino, costo_totale, tempo_totale, saldo_portafoglio, id_cliente):
+        self.id = str(uuid.uuid4())[:8]  # genero un codice identificativo univoco da 8 cifre
+        self.id_monopattino = id_monopattino
+        self.costo_totale = costo_totale
+        self.tempo_totale = tempo_totale
+        self.saldo_portafoglio = saldo_portafoglio
+        self.id_cliente = id_cliente
 
         ricevute = {}
-        if os.path.isfile("Dati/Ricevute.pickle"):
-            with open("Dati/Ricevute.pickle", "rb") as f:
+        if os.path.isfile(PATH_RICEVUTE):
+            with open(PATH_RICEVUTE, "rb") as f:
                 ricevute = dict(pickle.load(f))
-        ricevute[self.codice] = self
-        with open("Dati/Ricevute.pickle", "wb") as f:
+        ricevute[self.id] = self
+        with open(PATH_RICEVUTE, "wb") as f:
             pickle.dump(ricevute, f, pickle.HIGHEST_PROTOCOL)
 
-    # ritorna il costo totale della corsa
-    def get_costo_totale(self):
-        return round(self.tempo_utilizzo / 60 * Monopattino().costo_minuto, 2)
+        return self
 
-    # ritorna il trempo totale di utilizzo del mezzo
-    def get_tempo_utilizzo(self):
-        return (self.fine - self.inizio).total_seconds()
-
-    # funzione che restituisce un dizionario di tutte le ricevute
-    def get_ricevute(self):
-        if os.path.isfile("Dati/Ricevute.pickle"):
-            with open("Dati/Ricevute.pickle", "rb") as f:
-                ricevute = dict(pickle.load(f))
-                return ricevute or None
-
-    # funzione che stampa a schermo la ricevuta
-    def get_ricevuta_to_string(self):
-        if isinstance(self.mezzo, Monopattino):
-            if self.get_tempo_utilizzo() >= 60:
-
-                return "Costo per minuto: " + str(self.mezzo.costo_minuto) + " €/min\n" + \
-                       "Minuti utilizzati: " + str(format(self.get_tempo_utilizzo() / 60, '.1f')) + "\n" + \
-                       "Costo totale: " + str(self.costo_totale) + " €\n" + \
-                       "Data inizio: " + str(self.inizio) + "\n" + \
-                       "Data fine: " + str(self.fine) + "\n"
-            else:
-                return "Costo per minuto: " + str(self.mezzo.costo_minuto) + " €/min\n" + \
-                       "Secondi utilizzati: " + str(self.get_tempo_utilizzo()) + "\n" + \
-                       "Costo totale: " + str(self.costo_totale) + " €\n" + \
-                       "Data inizio: " + str(self.inizio) + "\n" + \
-                       "Data fine: " + str(self.fine) + "\n"
-
-    # funzione che restituisce la lista di tutte le ricevute di un cliente specifico
-    def get_ricevute_cliente(self, codice_cliente):
-        if os.path.isfile("Dati/Ricevute.pickle"):
-            with open("Dati/Ricevute.pickle", "rb") as f:
-                ricevute = dict(pickle.load(f))
-            return [ricevuta for ricevuta in ricevute.values() if ricevuta.cliente.codice == codice_cliente]
+    # to_string()
+    # return: String
+    def __str__(self):
+        # se sono passati piu di 60 secondi
+        if self.tempo_totale >= 60:
+            return "Id monopattino: " + self.id_monopattino + \
+                   "Costo per minuto: " + str(Monopattino().costo_minuto) + " €/min\n" + \
+                   "Minuti utilizzati: " + str(format(self.tempo_totale / 60, '.1f')) + "\n" + \
+                   "Costo totale: " + str(self.costo_totale) + " €\n" + \
+                   "Saldo attuale: " + str(self.saldo_portafoglio + "€\n")
+        # se sono passati meno di 60 secondi
         else:
-            return None
+            return "Id monopattino: " + self.id_monopattino + \
+                   "Costo per minuto: " + str(Monopattino().costo_minuto) + " €/min\n" + \
+                   "Secondi utilizzati: " + str(self.tempo_totale) + "\n" + \
+                   "Costo totale: " + str(self.costo_totale) + " €\n" + \
+                   "Saldo attuale: " + str(self.saldo_portafoglio + "€\n")
