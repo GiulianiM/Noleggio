@@ -4,7 +4,7 @@ import pickle
 
 class Portafoglio:
     def __init__(self):
-        self.saldo = 0.0
+        self.saldo = 0.00
         self.codice = ""
 
     # crea un nuovo portafoglio
@@ -12,17 +12,16 @@ class Portafoglio:
         # come codice univoco del portafoglio associo il codice univoco del cliente
         self.codice = codice_cliente
 
+        portafogli = {}
         if os.path.isfile("Dati/Portafogli.pickle"):
             with open("Dati/Portafogli.pickle", "rb") as f:
                 portafogli = dict(pickle.load(f))
-            portafogli[self.codice] = self
-            with open("Dati/Portafogli.pickle", "wb") as f:
-                pickle.dump(portafogli, f, pickle.HIGHEST_PROTOCOL)
-        else:
-            print("File non trovato")
+        portafogli[self.codice] = self
+        with open("Dati/Portafogli.pickle", "wb") as f:
+            pickle.dump(portafogli, f, pickle.HIGHEST_PROTOCOL)
 
     # ritorna il saldo del portafoglio del cliente
-    def getSaldo(self):
+    def get_saldo(self):
         if os.path.isfile("Dati/Portafogli.pickle"):
             with open("Dati/Portafogli.pickle", "rb") as f:
                 portafogli = dict(pickle.load(f))
@@ -30,12 +29,12 @@ class Portafoglio:
             for k, v in portafogli.items():
                 if k == self.codice:
                     self.saldo = v.saldo
-                    return round(v.saldo, 2)
+                    return format(v.saldo, '0.2f')
         else:
-            print("File non trovato")
+            return None
 
     # versa il denaro nel portafoglio del cliente
-    def versaDenaro(self, importo):
+    def versa_denaro(self, importo):
         self.saldo += importo
 
         if os.path.isfile("Dati/Portafogli.pickle"):
@@ -43,16 +42,15 @@ class Portafoglio:
                 portafogli = dict(pickle.load(f))
 
             for k, v in portafogli.items():
-                if k is self.codice:
+                if k == self.codice:
                     v.saldo += importo
 
             with open("Dati/Portafogli.pickle", "wb") as f:
                 pickle.dump(portafogli, f, pickle.HIGHEST_PROTOCOL)
-        else:
-            print("File non trovato")
+            return format(self.saldo, '0.2f'), "Importo versato correttamente"
 
     # preleva il denaro dal portafoglio del cliente
-    def prelevaDenaro(self, importo):
+    def addebita_denaro(self, importo):
         self.saldo -= importo
 
         if os.path.isfile("Dati/Portafogli.pickle"):
@@ -60,33 +58,27 @@ class Portafoglio:
                 portafogli = dict(pickle.load(f))
 
             for k, v in portafogli.items():
-                if k is self.codice:
+                if k == self.codice:
                     v.saldo -= importo
 
             with open("Dati/Portafogli.pickle", "wb") as f:
                 pickle.dump(portafogli, f, pickle.HIGHEST_PROTOCOL)
-        else:
-            print("File non trovato")
 
     # elimina il portafoglio del cliente
-    def rimuoviPortafoglio(self):
+    def rimuovi_portafoglio(self):
         if os.path.isfile('Dati/Portafogli.pickle'):
             with open('Dati/Portafogli.pickle', 'rb') as f:
                 portafogli = dict(pickle.load(f))
                 del portafogli[self.codice]
             with open('Dati/Portafogli.pickle', 'wb') as f:
                 pickle.dump(portafogli, f, pickle.HIGHEST_PROTOCOL)
-            self.saldo = 0.0
+            self.saldo = 0.00
             self.codice = -1
             del self
-        else:
-            print("File non trovato")
 
     # ritorna un dizionario con tutti i portafogli di tutti i clienti
-    def getPortafogli(self):
+    def get_portafogli(self):
         if os.path.isfile("Dati/Portafogli.pickle"):
             with open("Dati/Portafogli.pickle", "rb") as f:
                 portafogli = dict(pickle.load(f))
                 return portafogli or None
-        else:
-            print("File non trovato")
