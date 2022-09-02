@@ -1,8 +1,8 @@
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QDialog, QMessageBox
 from PyQt5.uic import loadUi
-from Controller.GestoreClienti import GestoreClienti
 
+from Controller.GestoreClienti import GestoreClienti
 from Utils.Const.PathViste import PATH_VISTA_CLIENTI
 from Viste.Accesso.Signup import Signup
 from Viste.Cliente.VistaModificaProfilo import VistaModificaProfilo
@@ -13,7 +13,8 @@ class VistaClienti(QDialog):
         super().__init__()
         loadUi(PATH_VISTA_CLIENTI, self)
         self.gestore_clienti = GestoreClienti()
-        self.id_cliente_selezionato = None
+        self.id_cliente = None
+        self.lista_clienti = {}
         self.setup_ui()
 
     def setup_ui(self):
@@ -57,15 +58,18 @@ class VistaClienti(QDialog):
         self.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
 
     def popola_lista_clienti(self):
-        clienti = self.gestore_clienti.visualizza_clienti()
-        if clienti is not None:
+        self.lista_clienti = self.gestore_clienti.visualizza_clienti()
+        if self.lista_clienti is not None:
             self.listWidget.clear()
-            self.listWidget.addItems(cliente.__str__() for cliente in clienti.values())
+            self.listWidget.addItems(cliente.__str__() for cliente in self.lista_clienti.values())
             self.listWidget.clicked.connect(self.seleziona_cliente)
 
     def seleziona_cliente(self):
-        self.id_cliente_selezionato = self.listWidget.currentItem()
-        print(self.id_cliente_selezionato)
+        riga = self.listWidget.currentRow()
+        keys = list(self.lista_clienti.keys())
+        da_cercare = keys[riga]
+        cliente = self.lista_clienti.get(da_cercare)
+        self.id_cliente = cliente.id
 
     def go_crea_cliente(self):
         self.crea_account = Signup(False)
@@ -73,22 +77,26 @@ class VistaClienti(QDialog):
         self.crea_account.show()
 
     def go_elimina_cliente(self):
-        if self.id_cliente_selezionato is not None:
-            ret = self.gestore_clienti.rimuovi_cliente(self.id_cliente_selezionato.text().split("\n")[0].split(" ")[1])
-            if ret:
-                QMessageBox.information(self, "Rimozione cliente", "Rimozione eseguita con successo!")
+        if self.id_cliente is not None:
+            res = self.gestore_clienti.rimuovi_cliente(self.id_cliente)
+            if res:
+                QMessageBox.information(self,
+                                        "Rimozione cliente",
+                                        "Rimozione eseguita con successo!")
                 self.popola_lista_clienti()
             else:
-                QMessageBox.information(self, "Rimozione cliente", "Errore rimozione! Cliente non trovato")
-            self.id_cliente_selezionato = None
+                QMessageBox.information(self,
+                                        "Rimozione cliente",
+                                        "Errore rimozione! Cliente non trovato"
+                                        )
+            self.id_cliente = None
 
     def go_modifica_cliente(self):
-        if self.id_cliente_selezionato is not None:
-            self.modifica_profilo = VistaModificaProfilo(
-                self.id_cliente_selezionato.text().split("\n")[0].split(" ")[1])
+        if self.id_cliente is not None:
+            self.modifica_profilo = VistaModificaProfilo(self.id_cliente)
             self.modifica_profilo.closed.connect(self.popola_lista_clienti)
             self.modifica_profilo.show()
-            self.id_cliente_selezionato = None
+            self.id_cliente = None
 
     def go_back(self):
         self.close()

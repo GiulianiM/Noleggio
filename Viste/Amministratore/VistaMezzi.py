@@ -88,12 +88,12 @@ class VistaMezzi(QDialog):
                                         "Attenzione!",
                                         "Eliminato correttamente!"
                                         )
+                self.popola_lista_mezzi()
             else:
                 QMessageBox.information(self,
                                         "Attenzione!",
                                         "Monopattino non eliminato!"
                                         )
-            self.popola_lista_mezzi()
             self.id_monopattino = None
 
     def go_modifica_monopattino(self):

@@ -87,6 +87,8 @@ class VistaCorsa(QDialog):
             self.popola_lista_mezzi()
 
             QMessageBox.information(self, "Ricevuta", "<p style=color:white> {}".format(ricevuta))
+        else:
+            QMessageBox.information(self, "Ricevuta", "<p style=color:white> Errore!")
 
     def go_back(self):
         self.go_termina_corsa()
