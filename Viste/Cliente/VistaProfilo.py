@@ -19,7 +19,7 @@ class VistaProfilo(QDialog):
     def setup_ui(self):
         self.widget = QtWidgets.QStackedWidget()
         # setup dei label
-        self.id_label_to_edit.setText(str(self.gestore_clienti.cliente_corrente.id))
+        self.id_label_to_edit.setText(self.gestore_clienti.cliente_corrente.id)
         self.nome_label_to_edit.setText(self.gestore_clienti.cliente_corrente.nome)
         self.cognome_label_to_edit.setText(self.gestore_clienti.cliente_corrente.cognome)
         self.cf_label_to_edit.setText(self.gestore_clienti.cliente_corrente.cf)

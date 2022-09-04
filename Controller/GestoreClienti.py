@@ -88,7 +88,9 @@ class GestoreClienti:
     # return: Cliente, Portafoglio
     def registra_cliente(self, nome, cognome, cf, telefono, password):
         temp_cliente = self.ricerca_cliente_cf(cf)
-        if not isinstance(temp_cliente, Cliente):
+        if isinstance(temp_cliente, Cliente):
+            return None, None
+        else:
             nuovo_cliente = Cliente().crea(
                 nome=nome,
                 cognome=cognome,
@@ -98,8 +100,6 @@ class GestoreClienti:
             )
             nuovo_portafoglio = Portafoglio().crea(nuovo_cliente.id)
             return nuovo_cliente, nuovo_portafoglio
-        else:
-            return None, None
 
     # 1. controllo se il campo codice fiscale è NON vuoto, se così fosse:
     #   a) controllo se NON esiste nessuno con quel codice fiscale
@@ -131,7 +131,7 @@ class GestoreClienti:
 
     # return: Dict of Clienti
     def visualizza_clienti(self):
-        return self.cliente_corrente.get_clienti()
+        return Cliente().get_clienti() if self.cliente_corrente is None else self.cliente_corrente.get_clienti()
 
     # 1. ricerca il cliente
     # 2. se esiste provvede a elimiarlo

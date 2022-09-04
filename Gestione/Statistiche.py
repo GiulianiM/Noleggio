@@ -1,11 +1,15 @@
 class Statistiche:
 
     def __init__(self, ricevute):
-        self.ricevute = ricevute
-        self.num_ricevute = len(ricevute)
+        if ricevute is not None:
+            self.ricevute = ricevute
+            self.num_ricevute = len(ricevute)
+        else:
+            self.ricevute = {}
+            self.num_ricevute = 0
 
     def ricavo_medio(self):
-        return self.ricavo() / self.num_ricevute
+        return (self.ricavo() / self.num_ricevute) if self.num_ricevute > 0 else 0
 
     def ricavo(self):
         if self.ricevute is not None:

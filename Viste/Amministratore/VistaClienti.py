@@ -83,13 +83,13 @@ class VistaClienti(QDialog):
                 QMessageBox.information(self,
                                         "Rimozione cliente",
                                         "Rimozione eseguita con successo!")
-                self.popola_lista_clienti()
             else:
                 QMessageBox.information(self,
                                         "Rimozione cliente",
                                         "Errore rimozione! Cliente non trovato"
                                         )
             self.id_cliente = None
+        self.popola_lista_clienti()
 
     def go_modifica_cliente(self):
         if self.id_cliente is not None:

@@ -13,7 +13,7 @@ class GestoreCorse:
         self.gestore_mezzi = GestoreMezzi()
         self.corsa = None
 
-    # 1. controllo il saldo (minimo 5€)
+    # 1. controllo il saldo (minimo 5E-Coin)
     # 2. prelevo le informazioni del monopattino
     # 3. setto il monopattino a "non disponibile"
     # 4. avvio la corsa
