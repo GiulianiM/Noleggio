@@ -58,9 +58,9 @@ class VistaClienti(QDialog):
         self.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
 
     def popola_lista_clienti(self):
+        self.listWidget.clear()
         self.lista_clienti = self.gestore_clienti.visualizza_clienti()
         if self.lista_clienti is not None:
-            self.listWidget.clear()
             self.listWidget.addItems(cliente.__str__() for cliente in self.lista_clienti.values())
             self.listWidget.clicked.connect(self.seleziona_cliente)
 
@@ -80,14 +80,9 @@ class VistaClienti(QDialog):
         if self.id_cliente is not None:
             res = self.gestore_clienti.rimuovi_cliente(self.id_cliente)
             if res:
-                QMessageBox.information(self,
-                                        "Rimozione cliente",
-                                        "Rimozione eseguita con successo!")
+                self.print_messagebox("Cliente rimosso con successo")
             else:
-                QMessageBox.information(self,
-                                        "Rimozione cliente",
-                                        "Errore rimozione! Cliente non trovato"
-                                        )
+                self.print_messagebox("Errore nella rimozione del cliente!")
             self.id_cliente = None
         self.popola_lista_clienti()
 
@@ -100,3 +95,12 @@ class VistaClienti(QDialog):
 
     def go_back(self):
         self.close()
+
+    def print_messagebox(self, message):
+        mb = QMessageBox()
+        mb.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
+        mb.setWindowTitle("Rimozione cliente")
+        mb.setIcon(QMessageBox.Information)
+        mb.setStyleSheet("background-color: rgb(54, 54, 54); color: white;")
+        mb.setText(message)
+        mb.exec()

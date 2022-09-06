@@ -17,7 +17,7 @@ class Monopattino:
     # return: self (questo monopattino)
     def crea(self):
         self.id = str(uuid.uuid4())[:8]  # genero un codice univoco identificativo da 8 cifre
-
+        self.disponibilita = True
         monopattini = {}
         if os.path.isfile(PATH_MONOPATTINI):
             with open(PATH_MONOPATTINI, "rb") as f:

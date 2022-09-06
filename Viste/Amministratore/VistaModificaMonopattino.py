@@ -22,7 +22,7 @@ class VistaModificaMonopattino(QDialog):
         self.id_label_to_edit.setText(str(self.gestore_mezzi.monopattino.id))
         self.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
 
-        if self.gestore_mezzi.monopattino.get_disponibili():
+        if self.gestore_mezzi.monopattino.get_disponibilita():
             self.disponibile_label_to_edit.setText("Disponibile")
             self.disponibile_button.setChecked(False)
             self.non_disponibile_button.setChecked(True)

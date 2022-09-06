@@ -1,7 +1,6 @@
 from builtins import len
 
 from PyQt5 import QtWidgets, QtCore
-from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QDialog, QMessageBox
 from PyQt5.uic import loadUi
 
@@ -10,7 +9,7 @@ from Utils.Const.PathViste import PATH_VISTA_MODIFICA_PROFILO
 
 
 class VistaModificaProfilo(QDialog):
-    closed = pyqtSignal()
+    closed = QtCore.pyqtSignal()
 
     def __init__(self, cliente_selezionato=None):
         super(VistaModificaProfilo, self).__init__()
@@ -26,7 +25,6 @@ class VistaModificaProfilo(QDialog):
         self.password = None
         self.cf = None
 
-
         self.setup_ui()
 
     def setup_ui(self):
@@ -40,17 +38,17 @@ class VistaModificaProfilo(QDialog):
 
     def go_conferma_modifiche(self):
         if self.check_campi_password() and self.check_campi_profilo():
-                ret = self.gestore_clienti.modifica_cliente(
-                    nome=self.nome,
-                    cognome=self.cognome,
-                    cf=self.cf,
-                    telefono=self.telefono,
-                    password=self.password
-                )
-                if not ret:
-                    QMessageBox.warning(self, "Attenzione", "Nessun utente trovato!")
-                else:
-                    QMessageBox.information(self, "Attenzione", "Modificato Correttamente!")
+            ret = self.gestore_clienti.modifica_cliente(
+                nome=self.nome,
+                cognome=self.cognome,
+                cf=self.cf,
+                telefono=self.telefono,
+                password=self.password
+            )
+            if not ret:
+                self.print_messagebox("Errore durante la modifica del profilo")
+            else:
+                self.print_messagebox("Profilo modificato con successo")
                 self.close()
 
     # controllo della password:
@@ -64,31 +62,17 @@ class VistaModificaProfilo(QDialog):
                 self.new_pw_input_check.text()) == 0:
             self.password = self.gestore_clienti.cliente_corrente.password
             return True
-
         if self.old_pw_input.text() != self.gestore_clienti.cliente_corrente.password:
-            QMessageBox.warning(self,
-                                "Attenzione!",
-                                '<p style=color:white>La vecchia password non è corretta</p>'
-                                )
+            self.print_messagebox("La vecchia password non coincide con quella inserita")
             return False
-
         elif self.new_pw_input.text() != self.new_pw_input_check.text():
-            QMessageBox.warning(self,
-                                "Attenzione!",
-                                '<p style=color:white>Le nuove password non corrispondono</p>'
-                                )
+            self.print_messagebox("Le password non coincidono")
             return False
         elif self.new_pw_input.text() == self.old_pw_input.text() or self.new_pw_input_check.text() == self.old_pw_input.text():
-            QMessageBox.warning(self,
-                                "Attenzione!",
-                                '<p style=color:white>La nuova password è uguale alla vecchia</p>'
-                                )
+            self.print_messagebox("La nuova password coincide con la vecchia")
             return False
         elif len(self.new_pw_input.text()) < 4 or len(self.new_pw_input_check.text()) < 4:
-            QMessageBox.warning(self,
-                                "Attenzione!",
-                                '<p style=color:white>La nuova password deve avere almeno 4 caratteri</p>'
-                                )
+            self.print_messagebox("La password deve contenere almeno 4 caratteri")
             return False
         else:
             self.password = self.new_pw_input.text()
@@ -101,23 +85,17 @@ class VistaModificaProfilo(QDialog):
     # 4) il telefono deve contenere 10 cifre
     def check_campi_profilo(self):
         # check nome
-        if len(self.new_name_input.text()) > 3:
+        if len(self.new_name_input.text()) >= 3:
             self.nome = self.new_name_input.text()
         elif 3 > len(self.new_name_input.text()) > 0:
-            QMessageBox.warning(self,
-                                "Attenzione!",
-                                "<p style=color:white>Il nome deve avere almeno 3 caratteri"
-                                )
+            self.print_messagebox("Il nome deve contenere almeno 3 caratteri")
             return False
 
         # check cognome
-        if len(self.new_surname_input.text()) > 3:
+        if len(self.new_surname_input.text()) >= 3:
             self.cognome = self.new_surname_input.text()
         elif 3 > len(self.new_surname_input.text()) > 0:
-            QMessageBox.warning(self,
-                                "Attenzione!",
-                                "<p style=color:white>Il cognome deve avere almeno 3 caratteri"
-                                )
+            self.print_messagebox("Il cognome deve contenere almeno 3 caratteri")
             return False
 
         # check codice fiscale
@@ -125,30 +103,29 @@ class VistaModificaProfilo(QDialog):
         if len(self.new_cf_input.text()) == 16 and self.new_cf_input.text().isalnum():
             self.cf = self.new_cf_input.text()
         # altrimenti --> Genera Errore!
-        elif len(self.new_cf_input.text()) != 16:
-            if len(self.new_cf_input.text()) > 0:
-                if not self.new_cf_input.text().isalnum():
-                    QMessageBox.warning(self,
-                                        "Attenzione!",
-                                        "<p style=color:white>Il id_cliente fiscale puo contenere solo 16 caratteri"
-                                        )
-                    return False
+        elif len(self.new_cf_input.text()) > 0:
+            self.print_messagebox("Il codice fiscale deve contenere 16 caratteri alfanumerici")
+            return False
 
         # check telefono
         # se ha inserito 10 numeri --> OK
         if len(self.new_phone_input.text()) == 10 and self.new_phone_input.text().isnumeric():
             self.telefono = self.new_phone_input.text()
         # altrimenti  --> Genera Errore!
-        elif len(self.new_phone_input.text()) != 10:
-            if len(self.new_phone_input.text()) > 0:
-                if not self.new_phone_input.text().isnumeric():
-                    QMessageBox.warning(self,
-                                        "Attenzione!",
-                                        "<p style=color:white>Il numero di telefono puo contenere solo 10 cifre"
-                                        )
-                    return False
+        elif len(self.new_phone_input.text()) > 0:
+            self.print_messagebox("Il numero di telefono deve contenere 10 cifre")
+            return False
 
         return True
+
+    def print_messagebox(self, message):
+        mb = QMessageBox()
+        mb.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
+        mb.setWindowTitle("Attenzione")
+        mb.setIcon(QMessageBox.Information)
+        mb.setStyleSheet("background-color: rgb(54, 54, 54); color: white;")
+        mb.setText(message)
+        mb.exec()
 
     def closeEvent(self, event):
         self.closed.emit()

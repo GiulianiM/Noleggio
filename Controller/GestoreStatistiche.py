@@ -18,13 +18,13 @@ class GestoreStatistiche:
         return self.formatta_tempo(self.statistiche.tempo_utilizzo())
 
     def get_ricavo_medio(self):
-        return format(self.statistiche.ricavo_medio(), '.2f') + "€"
+        return format(self.statistiche.ricavo_medio(), '.2f') + " €"
 
     def get_ricavo_totale(self):
-        return format(self.statistiche.ricavo(), ".2f") + "€"
+        return format(self.statistiche.ricavo(), ".2f") + " €"
 
     def formatta_tempo(self, tempo):
         if tempo >= 60:
-            return format(tempo / 60, '.1f') + "minuti"
+            return format(tempo / 60, '.1f') + " minuti"
         else:
-            return format(tempo, '.1f') + "secondi"
+            return format(tempo, '.1f') + " secondi"

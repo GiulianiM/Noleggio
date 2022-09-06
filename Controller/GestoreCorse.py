@@ -13,13 +13,13 @@ class GestoreCorse:
         self.gestore_mezzi = GestoreMezzi()
         self.corsa = None
 
-    # 1. controllo il saldo (minimo 5E-Coin)
+    # 1. controllo il saldo (minimo 5€)
     # 2. prelevo le informazioni del monopattino
     # 3. setto il monopattino a "non disponibile"
     # 4. avvio la corsa
     # return: Boolean
     def avvia_corsa(self, id_monopattino):
-        if float(self.gestore_clienti.visualizza_portafoglio()) >= 5:
+        if float(self.gestore_clienti.visualizza_portafoglio()) >= 5.00:
             monopattino = self.gestore_mezzi.ricerca_monopattino_id(id_monopattino)
             if isinstance(monopattino, Monopattino):
                 self.gestore_mezzi.set_monopattino(monopattino)

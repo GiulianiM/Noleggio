@@ -6,13 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>390</width>
+    <width>459</width>
     <height>350</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>390</width>
+    <height>350</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>460</width>
     <height>350</height>
    </size>
   </property>
@@ -60,7 +66,7 @@
             <string notr="true">color:rgb(255, 255, 255)</string>
            </property>
            <property name="text">
-            <string>Nuovo cognome:</string>
+            <string>Nuovo Cognome:</string>
            </property>
           </widget>
          </item>
@@ -75,7 +81,7 @@
             <string notr="true">color:rgb(255, 255, 255)</string>
            </property>
            <property name="text">
-            <string>Nuovo telefono:</string>
+            <string>Nuovo Telefono:</string>
            </property>
           </widget>
          </item>
@@ -90,7 +96,7 @@
             <string notr="true">color:rgb(255, 255, 255)</string>
            </property>
            <property name="text">
-            <string>Nuovo CF:</string>
+            <string>Nuovo C. Fiscale:</string>
            </property>
           </widget>
          </item>
@@ -172,6 +178,9 @@
              <pointsize>13</pointsize>
             </font>
            </property>
+           <property name="styleSheet">
+            <string notr="true">color: white;</string>
+           </property>
           </widget>
          </item>
          <item>
@@ -186,6 +195,9 @@
             <font>
              <pointsize>13</pointsize>
             </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);</string>
            </property>
           </widget>
          </item>
@@ -202,6 +214,9 @@
              <pointsize>13</pointsize>
             </font>
            </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);</string>
+           </property>
           </widget>
          </item>
          <item>
@@ -216,6 +231,9 @@
             <font>
              <pointsize>13</pointsize>
             </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);</string>
            </property>
           </widget>
          </item>

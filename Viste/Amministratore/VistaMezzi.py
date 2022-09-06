@@ -57,9 +57,9 @@ class VistaMezzi(QDialog):
         self.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
 
     def popola_lista_mezzi(self):
+        self.listWidget.clear()
         self.lista_monopattini = self.gestore_mezzi.get_all_mezzi()
         if len(self.lista_monopattini) > 0:
-            self.listWidget.clear()
             self.listWidget.addItems(mezzo.__str__() for mezzo in self.lista_monopattini.values())
             self.listWidget.clicked.connect(self.seleziona_mezzo)
 
@@ -75,7 +75,6 @@ class VistaMezzi(QDialog):
         monopattino = self.lista_monopattini.get(da_cercare)
         self.id_monopattino = monopattino.id
 
-
     def go_aggiungi_monopattino(self):
         self.gestore_mezzi.aggiungi_monopattino()
         self.popola_lista_mezzi()
@@ -84,17 +83,11 @@ class VistaMezzi(QDialog):
         if self.id_monopattino is not None:
             res = self.gestore_mezzi.elimina_monopattino(self.id_monopattino)
             if res:
-                QMessageBox.information(self,
-                                        "Attenzione!",
-                                        "Eliminato correttamente!"
-                                        )
-                self.popola_lista_mezzi()
+                self.print_messagebox("Monopattino eliminato con successo!")
             else:
-                QMessageBox.information(self,
-                                        "Attenzione!",
-                                        "Monopattino non eliminato!"
-                                        )
+                self.print_messagebox("Errore durante l'eliminazione!")
             self.id_monopattino = None
+        self.popola_lista_mezzi()
 
     def go_modifica_monopattino(self):
         if self.id_monopattino is not None:
@@ -108,3 +101,12 @@ class VistaMezzi(QDialog):
 
     def go_back(self):
         self.close()
+
+    def print_messagebox(self, message):
+        mb = QMessageBox()
+        mb.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
+        mb.setWindowTitle("Attenzione!")
+        mb.setIcon(QMessageBox.Information)
+        mb.setStyleSheet("background-color: rgb(54, 54, 54); color: white;")
+        mb.setText(message)
+        mb.exec()

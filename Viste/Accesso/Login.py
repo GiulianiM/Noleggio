@@ -59,7 +59,7 @@ class Login(QDialog):
                 else:
                     QMessageBox.warning(self, "Attenzione!", "Password errata!")
             else:
-                QMessageBox.warning(self, "Attenzione!", "Cliente con trovato con questo ID")
+                QMessageBox.warning(self, "Attenzione!", "Cliente non trovato con questo ID")
 
     def go_registra(self):
         self.signup = Signup()

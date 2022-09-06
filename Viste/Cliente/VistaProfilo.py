@@ -33,6 +33,7 @@ class VistaProfilo(QDialog):
 
     def go_modifica_profilo(self):
         self.modifica_profilo = VistaModificaProfilo()
+        self.modifica_profilo.closed.connect(self.refresh_labels)
         self.modifica_profilo.show()
 
     def go_visualizza_portafoglio(self):
@@ -45,3 +46,10 @@ class VistaProfilo(QDialog):
 
     def go_back(self):
         self.close()
+
+    def refresh_labels(self):
+        self.gestore_clienti = GestoreClienti()
+        self.nome_label_to_edit.setText(self.gestore_clienti.cliente_corrente.nome)
+        self.cognome_label_to_edit.setText(self.gestore_clienti.cliente_corrente.cognome)
+        self.cf_label_to_edit.setText(self.gestore_clienti.cliente_corrente.cf)
+        self.telefono_label_to_edit.setText(self.gestore_clienti.cliente_corrente.telefono)

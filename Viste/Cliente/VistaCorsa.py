@@ -55,9 +55,9 @@ class VistaCorsa(QDialog):
 
     # mostra una lista di monopattini disponibili (i loro codici)
     def popola_lista_mezzi(self):
+        self.listWidget.clear()
         mezzi = self.gestore_corse.gestore_mezzi.get_mezzi_disponibili()
         if len(mezzi) > 0:
-            self.listWidget.clear()
             self.listWidget.addItems([mezzo.id for mezzo in mezzi])
             self.listWidget.clicked.connect(self.seleziona_mezzo)
 
@@ -74,10 +74,10 @@ class VistaCorsa(QDialog):
         if is_avviata:
             self.bottone_inizia_corsa.setEnabled(False)
             self.bottone_termina_corsa.setEnabled(True)
-            QMessageBox.information(self, "Attenzione!", "Corsa Avviata!")
+            self.print_messagebox("Attenzione", "Corsa avviata con successo")
             self.popola_lista_mezzi()
         else:
-            QMessageBox.warning(self, "Attenzione!", "<p style=color:white> Saldo insufficiente!")
+            self.print_messagebox("Attenzione!", "Corsa non avviata, saldo insufficiente!")
 
     def go_termina_corsa(self):
         is_terminata, ricevuta = self.gestore_corse.termina_corsa()
@@ -85,11 +85,17 @@ class VistaCorsa(QDialog):
             self.bottone_inizia_corsa.setEnabled(True)
             self.bottone_termina_corsa.setEnabled(False)
             self.popola_lista_mezzi()
-
-            QMessageBox.information(self, "Ricevuta", "<p style=color:white> {}".format(ricevuta))
-        else:
-            QMessageBox.information(self, "Ricevuta", "<p style=color:white> Errore!")
+            self.print_messagebox("Ricevuta", ricevuta.__str__())
 
     def go_back(self):
         self.go_termina_corsa()
         self.close()
+
+    def print_messagebox(self, title, message):
+        mb = QMessageBox()
+        mb.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
+        mb.setWindowTitle(title)
+        mb.setIcon(QMessageBox.Information)
+        mb.setStyleSheet("background-color: rgb(54, 54, 54); color: white;")
+        mb.setText(message)
+        mb.exec()

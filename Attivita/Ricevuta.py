@@ -42,15 +42,13 @@ class Ricevuta:
     def __str__(self):
         # se sono passati piu di 60 secondi
         if self.tempo_totale >= 60:
-            return "Id monopattino: " + self.id_monopattino + \
+            return "Id monopattino: " + self.id_monopattino + "\n" + \
                    "Costo per minuto: " + str(Monopattino().costo_minuto) + " €/min\n" + \
                    "Minuti utilizzati: " + str(format(self.tempo_totale / 60, '.1f')) + "\n" + \
-                   "Costo totale: " + str(self.costo_totale) + " €\n" + \
-                   "Saldo attuale: " + str(self.saldo_portafoglio + "€\n")
+                   "Costo totale: " + str(self.costo_totale) + " €\n"
         # se sono passati meno di 60 secondi
         else:
-            return "Id monopattino: " + self.id_monopattino + \
+            return "Id monopattino: " + self.id_monopattino + "\n" + \
                    "Costo per minuto: " + str(Monopattino().costo_minuto) + " €/min\n" + \
                    "Secondi utilizzati: " + str(self.tempo_totale) + "\n" + \
-                   "Costo totale: " + str(self.costo_totale) + " €\n" + \
-                   "Saldo attuale: " + str(self.saldo_portafoglio + "€\n")
+                   "Costo totale: " + str(self.costo_totale) + " €\n"

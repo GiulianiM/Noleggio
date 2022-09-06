@@ -52,7 +52,7 @@ class Signup(QDialog):
                 self.show_msg(
                     livello=0,
                     titolo="Creazione Account!",
-                    msg='<p style=color:white> Registrato con <br> con id_cliente: "{}" e password: "{}"</p>'.format(
+                    msg='<p style=color:white> Registrato con successo,<br> con id: "{}" e password: "{}"</p>'.format(
                         cliente.id,
                         cliente.password
                     )
@@ -61,6 +61,8 @@ class Signup(QDialog):
                 if self.is_cliente:
                     self.homepage_cliente = VistaHome()
                     self.homepage_cliente.show()
+                    self.close()
+                else:
                     self.close()
 
     def check_campi(self):
@@ -84,14 +86,14 @@ class Signup(QDialog):
             self.show_msg(
                 livello=1,
                 titolo="Attenzione!",
-                msg="Il id_cliente fiscale puo contenere solo 16 caratteri"
+                msg="Il codice fiscale può contenere solo 16 caratteri"
             )
         # il numero di telefono puo avere solo 10 cifre
         elif len(self.telefono.text()) != 10 or not str(self.telefono.text()).isnumeric():
             self.show_msg(
                 livello=1,
                 titolo="Attenzione!",
-                msg="Il numero di telefono puo contenere solo 10 cifre"
+                msg="Il numero di telefono può contenere solo 10 cifre"
             )
         # la password deve avere minimo 4 caratteri
         elif len(self.password.text()) < 4:
@@ -114,3 +116,6 @@ class Signup(QDialog):
         mb.setStyleSheet("background-color: rgb(54, 54, 54); color: white;")
         mb.setText(msg)
         mb.exec()
+
+    def closeEvent(self, event):
+        self.closed.emit()
