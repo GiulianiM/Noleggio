@@ -1,4 +1,5 @@
 import os
+import pathlib
 import pickle
 import uuid
 
@@ -32,6 +33,8 @@ class Ricevuta:
             with open(PATH_RICEVUTE, "rb") as f:
                 ricevute = dict(pickle.load(f))
         ricevute[self.id] = self
+        if not os.path.isdir(pathlib.Path(PATH_RICEVUTE).parent):
+            os.mkdir(pathlib.Path(PATH_RICEVUTE).parent)
         with open(PATH_RICEVUTE, "wb") as f:
             pickle.dump(ricevute, f, pickle.HIGHEST_PROTOCOL)
 
