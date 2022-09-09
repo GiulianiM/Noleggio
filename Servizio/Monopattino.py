@@ -1,4 +1,5 @@
 import os
+import pathlib
 import pickle
 import uuid
 
@@ -24,6 +25,8 @@ class Monopattino:
                 monopattini = pickle.load(f)
 
         monopattini[self.id] = self
+        if not os.path.isdir(pathlib.Path(PATH_MONOPATTINI).parent):
+            os.mkdir(pathlib.Path(PATH_MONOPATTINI).parent)
         with open(PATH_MONOPATTINI, "wb") as f:
             pickle.dump(monopattini, f, pickle.HIGHEST_PROTOCOL)
 

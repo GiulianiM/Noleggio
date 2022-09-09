@@ -1,6 +1,7 @@
 import os
 import pickle
 import uuid
+import pathlib
 
 from Utils.Const.PathFiles import PATH_CLIENTI, PATH_CURRENT_USER
 
@@ -27,6 +28,10 @@ class Cliente:
         self.id = str(uuid.uuid4())[:8]  # genero un id_cliente da 8 caratteri alfanumerici
 
         clienti = {}
+        if not os.path.isdir(pathlib.Path(PATH_CLIENTI).parent):
+            os.mkdir(pathlib.Path(PATH_CLIENTI).parent)
+            with open(PATH_CLIENTI, 'wb') as f:
+                pickle.dump(clienti, f, pickle.HIGHEST_PROTOCOL)
         if os.path.isfile(PATH_CLIENTI):
             with open(PATH_CLIENTI, "rb") as f:
                 clienti = dict(pickle.load(f))

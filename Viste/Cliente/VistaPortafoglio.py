@@ -22,15 +22,24 @@ class VistaPortafoglio(QDialog):
 
     def go_versamento(self):
         value = self.quantita_da_versare.value()
-        saldo = self.gestore_clienti.versa_denaro(value)
-        self.saldo_label_to_edit.setText(saldo + " €")
-        mb = QMessageBox()
-        mb.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
-        mb.setWindowTitle("Attenzione")
-        mb.setIcon(QMessageBox.Information)
-        mb.setStyleSheet("background-color: rgb(54, 54, 54); color: white;")
-        mb.setText("Denaro versato con successo!")
-        mb.exec()
+        if value == 0:
+            mb = QMessageBox()
+            mb.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
+            mb.setWindowTitle("Attenzione")
+            mb.setIcon(QMessageBox.Information)
+            mb.setStyleSheet("background-color: rgb(54, 54, 54); color: white;")
+            mb.setText("Inserire un valore maggiore di 0!")
+            mb.exec()
+        else:
+            saldo = self.gestore_clienti.versa_denaro(value)
+            self.saldo_label_to_edit.setText(saldo + " €")
+            mb = QMessageBox()
+            mb.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
+            mb.setWindowTitle("Attenzione")
+            mb.setIcon(QMessageBox.Information)
+            mb.setStyleSheet("background-color: rgb(54, 54, 54); color: white;")
+            mb.setText("Denaro versato con successo!")
+            mb.exec()
 
     def go_back(self):
         self.close()
