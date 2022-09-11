@@ -19,7 +19,6 @@ class Login(QDialog):
     def __init__(self):
         super(Login, self).__init__()
         loadUi(PATH_VISTA_LOGIN, self)
-        self.gestore_clienti = None
         self.setup_ui()
 
     def setup_ui(self):
@@ -63,8 +62,8 @@ class Login(QDialog):
 
     def go_registra(self):
         self.signup = Signup()
+        self.signup.closed.connect(self.close)
         self.signup.show()
         self.widget.setCurrentIndex(self.widget.currentIndex() + 1)
-        self.close()
 
 
