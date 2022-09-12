@@ -10,6 +10,12 @@
     <height>600</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>600</width>
+    <height>600</height>
+   </size>
+  </property>
   <property name="maximumSize">
    <size>
     <width>600</width>
@@ -170,6 +176,11 @@ color: rgb(255, 255, 255);</string>
          </item>
          <item>
           <widget class="QPushButton" name="back_button">
+           <property name="font">
+            <font>
+             <bold>true</bold>
+            </font>
+           </property>
            <property name="styleSheet">
             <string notr="true">font-size:20; color:white;background-color:rgb(38, 157, 206)
 </string>

@@ -6,14 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>359</width>
-    <height>307</height>
+    <width>800</width>
+    <height>380</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>380</height>
+   </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>640</width>
-    <height>360</height>
+    <width>800</width>
+    <height>380</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -27,13 +33,13 @@
   <property name="styleSheet">
    <string notr="true">background-color: rgb(54, 54, 54);</string>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>341</width>
-     <height>287</height>
+     <width>781</width>
+     <height>361</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
@@ -221,6 +227,9 @@
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Minimum</enum>
+        </property>
         <property name="sizeHint" stdset="0">
          <size>
           <width>20</width>
@@ -247,8 +256,7 @@
 </string>
           </property>
           <property name="text">
-           <string>🔧Modifica
-  Profilo</string>
+           <string>🔧Modifica Profilo</string>
           </property>
          </widget>
         </item>
@@ -265,8 +273,7 @@
 </string>
           </property>
           <property name="text">
-           <string>🪙Visualizza
- Portafoglio</string>
+           <string>🪙Visualizza Portafoglio</string>
           </property>
          </widget>
         </item>
@@ -283,8 +290,7 @@
 </string>
           </property>
           <property name="text">
-           <string>🧾Visualizza
-   Ricevute</string>
+           <string>🧾Visualizza Ricevute</string>
           </property>
          </widget>
         </item>
@@ -309,6 +315,11 @@
       </item>
       <item>
        <widget class="QPushButton" name="back_button">
+        <property name="font">
+         <font>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="styleSheet">
          <string notr="true">font-size:20; color:white;background-color:rgb(38, 157, 206)
 </string>

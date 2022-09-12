@@ -88,6 +88,11 @@ class Monopattino:
     # to_string()
     # return: String
     def __str__(self):
-        return "Id monopattino: " + self.id + "\n" + \
+        if self.disponibilita:
+            return "Id monopattino: " + self.id + "\n" + \
                "Costo al minuto: " + str(self.costo_minuto) + "\n" + \
-               "Disponibilita: " + str(self.disponibilita)
+               "Disponibilita: Disponibile" + "\n"
+        else:
+            return "Id monopattino: " + self.id + "\n" + \
+               "Costo al minuto: " + str(self.costo_minuto) + "\n" + \
+               "Disponibilita: Non disponibile" + "\n"

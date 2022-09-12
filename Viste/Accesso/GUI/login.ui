@@ -9,19 +9,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>372</width>
+    <width>380</width>
     <height>480</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>372</width>
+    <width>380</width>
     <height>480</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>372</width>
+    <width>380</width>
     <height>480</height>
    </size>
   </property>
@@ -278,6 +278,11 @@ font: 28pt &quot;Segoe UI&quot;;</string>
      </item>
      <item>
       <widget class="QLabel" name="label_5">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
         <string notr="true">font-size:14; color:white
 </string>
@@ -291,6 +296,11 @@ font: 28pt &quot;Segoe UI&quot;;</string>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
         <widget class="QPushButton" name="loginbutton">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
          <property name="styleSheet">
           <string notr="true">color:white;font-size:14; background-color:rgb(38, 157, 206)</string>
          </property>
@@ -301,6 +311,11 @@ font: 28pt &quot;Segoe UI&quot;;</string>
        </item>
        <item>
         <widget class="QPushButton" name="createaccbutton">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
          <property name="styleSheet">
           <string notr="true">font-size:14; color:white;background-color:rgb(38, 157, 206)
 </string>

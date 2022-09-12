@@ -33,7 +33,7 @@ class Login(QDialog):
     # se le credenziali inserite sono di un utente qualsiasi:
     #   controllo se esiste un cliente con tale credenziali, se esiste -> mostro la homepage del cliente
     def go_accedi(self):
-        id = self.id.text().strip()
+        id = self.id.text().strip().lower()
         password = self.password.text()
 
         if id == "admin" and password == "password":
@@ -62,7 +62,7 @@ class Login(QDialog):
 
     def go_registra(self):
         self.signup = Signup()
-        self.signup.closed.connect(self.close)
+        self.close()
         self.signup.show()
         self.widget.setCurrentIndex(self.widget.currentIndex() + 1)
 

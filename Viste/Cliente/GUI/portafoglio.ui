@@ -27,7 +27,7 @@
   <property name="styleSheet">
    <string notr="true">background-color: rgb(52, 52, 52);</string>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>7</x>
@@ -218,6 +218,11 @@
           <height>30</height>
          </size>
         </property>
+        <property name="font">
+         <font>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="styleSheet">
          <string notr="true">font-size:20; color:white;background-color:rgb(38, 157, 206)
 </string>
@@ -234,6 +239,11 @@
           <width>100</width>
           <height>30</height>
          </size>
+        </property>
+        <property name="font">
+         <font>
+          <bold>true</bold>
+         </font>
         </property>
         <property name="styleSheet">
          <string notr="true">font-size:20; color:white;background-color:rgb(38, 157, 206)

@@ -7,8 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>485</width>
-    <height>364</height>
+    <height>365</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>485</width>
+    <height>365</height>
+   </size>
   </property>
   <property name="maximumSize">
    <size>
@@ -145,6 +151,11 @@
        </item>
        <item>
         <widget class="QPushButton" name="back_button">
+         <property name="font">
+          <font>
+           <bold>true</bold>
+          </font>
+         </property>
          <property name="styleSheet">
           <string notr="true">font-size:20; color:white;background-color:rgb(38, 157, 206)
 </string>
